@@ -64,9 +64,9 @@ const steps = [
 ];
 
 const pledges = [
-	['Health Guarantee', 'Making the commitment to add a furry friend does not end when you get home. As fellow puppy owners, we know the importance of having a happy and healthy puppy.'],
-	['No Puppy Mill Pledge', 'We have zero tolerance toward puppy mills and pride ourselves in connecting you with honest and reputable breeders where puppies are raised with love and compassion.'],
-	['Safe Journey Home', 'No matter where you are located, we do our best to ensure your puppy has as close to an enjoyable and stress-free experience as possible.'],
+	['Health Guarantee', 'The commitment doesn\u2019t end at home. As fellow puppy owners, we know how much a happy, healthy puppy matters.'],
+	['No Puppy Mill Pledge', 'Zero tolerance for puppy mills. We connect you only with honest, reputable breeders who raise puppies with love.'],
+	['Safe Journey Home', 'Wherever you live, we do our best to make your puppy\u2019s trip calm and stress-free.'],
 ];
 
 const faq = [
@@ -492,7 +492,7 @@ svg.i{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-
 .promo .long{display:inline}.promo .short{display:none}
 header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--blue)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
-@media (min-width:981px){.top .wrap{width:min(1480px,100% - clamp(40px,7vw,112px));margin-inline:clamp(20px,4.5vw,72px) auto}}
+@media (min-width:1101px){.top .wrap{width:min(1480px,100% - clamp(40px,7vw,112px));margin-inline:clamp(20px,4.5vw,72px) auto}}
 .logo img{height:38px;width:auto}
 .top-actions{display:flex;align-items:center;gap:12px}
 .top-call{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2;text-decoration:none;color:var(--slate);margin-right:6px}
@@ -514,7 +514,7 @@ header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px so
 .hero-media::before{content:"";position:absolute;inset:0;z-index:1;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 22%,transparent 42%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 22%,transparent 42%)}
 .hero h1{color:#fff;font-size:clamp(34px,4.1vw,56px);font-weight:700;letter-spacing:-.022em;line-height:1.06;text-shadow:0 2px 24px rgba(39,50,61,.35)}
 .hero h1 .hand{display:block;margin-top:.1em;font-family:'Caveat','Segoe Script',cursive;font-weight:700;font-size:1.3em;line-height:1.05;letter-spacing:.01em;transform:rotate(-1.5deg);transform-origin:left center}
-.hero h1 em{font-style:normal;color:var(--blue);background:linear-gradient(transparent 84%,rgba(253,126,20,.7) 84%);padding-inline:2px}
+.hero h1 em{-webkit-box-decoration-break:clone;box-decoration-break:clone;font-style:normal;color:var(--blue);background:linear-gradient(transparent 84%,rgba(253,126,20,.7) 84%);padding-inline:2px}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:34px}
 .hero .cta-row{margin-top:28px}
 .hero .link-btn{color:#fff;text-decoration-color:rgba(255,255,255,.5)}
@@ -601,16 +601,16 @@ table.compare{width:100%;border-collapse:separate;border-spacing:0;border-radius
 .how .cta-row{margin-top:34px}
 
 /* ===== Guarantee ===== */
-.promise{background:var(--slate);color:#fff}
+.promise{background:var(--slate);color:#fff;padding:clamp(36px,4.4vw,64px) 0}
 .promise .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center}
-.promise h2{color:#fff;font-size:clamp(28px,3.4vw,42px)}
-.pledges{margin-top:30px;border-top:1px solid rgba(255,255,255,.22)}
-.pledges article{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.22)}
-.pledges h3{color:#fff;font-size:20px;font-weight:600}
-.pledges p{margin-top:6px;color:#e2e8ed;font-size:17px}
-.promise .more{display:inline-block;margin-top:24px;color:#fff;font-weight:600}
+.promise h2{color:#fff;font-size:clamp(26px,2.9vw,36px)}
+.pledges{margin-top:20px;border-top:1px solid rgba(255,255,255,.22)}
+.pledges article{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.pledges h3{color:#fff;font-size:18px;font-weight:600}
+.pledges p{margin-top:4px;color:#e2e8ed;font-size:16px;line-height:1.5}
+.promise .more{display:inline-block;margin-top:16px;color:#fff;font-weight:600}
 .promise-media{position:relative}
-.promise-media img.ph{width:100%;border-radius:22px;aspect-ratio:1/1;object-fit:cover;object-position:62% center}
+.promise-media img.ph{width:100%;border-radius:22px;aspect-ratio:4/3;object-fit:cover;object-position:62% center}
 
 /* ===== FAQ ===== */
 .faq .list{max-width:820px}
@@ -683,19 +683,21 @@ textarea.cs-input{min-height:110px;resize:vertical}
 }
 
 /* ===== Responsive ===== */
-@media (max-width:980px){
-  .compare-wrap,.how .grid,.promise .grid,.final .card,.offer .grid{grid-template-columns:1fr}
-  .compare-wrap .sec-head{position:static;margin-bottom:28px}
+@media (max-width:1100px){
   /* mobile order: headline, then photo + offer, then copy and CTAs */
   .hero{flex-direction:column;align-items:stretch;min-height:0;padding:0}
   .hero-grid{display:contents}
   .hero-head,.hero-rest{width:min(1160px,100% - 40px);margin-inline:auto}
   .hero-head{order:1;padding:28px 0 22px}
-  .hero-media{order:2;position:relative;inset:auto;width:100%;aspect-ratio:4/3;max-height:520px;z-index:0}
+  .hero-media{order:2;position:relative;inset:auto;width:100%;aspect-ratio:16/9;max-height:460px;z-index:0}
   .hero-media::before{display:none}
   .hero-media::after{background:linear-gradient(180deg,var(--slate) 0%,rgba(51,65,79,0) 26%,rgba(51,65,79,0) 52%,rgba(39,50,61,.82) 100%)}
   .offer-card{right:auto;left:20px;bottom:18px;width:min(320px,calc(100% - 40px))}
   .hero-rest{order:3;padding:6px 0 clamp(32px,7vw,44px)}
+}
+@media (max-width:980px){
+  .compare-wrap,.how .grid,.promise .grid,.final .card,.offer .grid{grid-template-columns:1fr}
+  .compare-wrap .sec-head{position:static;margin-bottom:28px}
   .trust ul{grid-template-columns:1fr 1fr}
   .trust li:nth-child(odd){border-left:0;padding-left:0}
   .trust li:nth-child(n+3){border-top:1px solid var(--line)}
