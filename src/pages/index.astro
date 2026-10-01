@@ -24,15 +24,6 @@ const compare = [
 	['Support throughout the process', 'Stuck with your gut feeling'],
 ];
 
-// Breed collections (lifestyle). Point each href at its collection page when the URLs are confirmed.
-const collections = [
-	{ name: 'Apartment-Friendly Dogs', img: 'apartment', alt: 'A Cavalier King Charles Spaniel puppy walking across a living room floor' },
-	{ name: 'Small Dogs', img: 'small', alt: 'A Yorkshire Terrier puppy on a soft blanket' },
-	{ name: 'Family Dogs', img: 'family', alt: 'A smiling girl hugging a puppy in autumn leaves' },
-	{ name: 'Hypoallergenic Dogs', img: 'hypoallergenic', alt: 'A curly cream Mini Goldendoodle puppy' },
-	{ name: 'Emotional Support Dogs', img: 'emotional-support', alt: 'A Cavapoo puppy looking up at the camera' },
-].map((c) => ({ ...c, href: PUPPIES }));
-
 // Popular breeds, ordered best seller to slowest. A breed shows once it has a photo in public/images/breeds/.
 // To add one: drop <img>.webp (360x480) in that folder and set `img` below.
 const breedsRanked = [
@@ -154,7 +145,6 @@ const schema = {
       <h1 id="h1">Find a Healthy Puppy from a <em>Verified Breeder.</em> No Scams. No Puppy Mills.</h1>
     </div>
     <div class="hero-rest">
-      <p class="sub">We are ready to connect you with a puppy from our network of screened and approved breeders. Every puppy is vet-checked, and a real person helps you from your first message to Gotcha day.</p>
 
       <div class="cta-row">
         <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="hero_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
@@ -187,30 +177,9 @@ const schema = {
 </div>
 
 <!-- ================= BREED COLLECTIONS ================= -->
-<section class="rail" aria-label="Browse puppies by collection and breed">
+<section class="rail" aria-labelledby="h2-breeds">
   <div class="wrap">
-  <div class="block" data-rail>
-    <div class="rail-top">
-      <div class="sec-head reveal">
-        <h2 id="h2-collections">Perfect puppies for your lifestyle</h2>
-      </div>
-      <div class="rail-btns">
-        <button class="rail-btn" type="button" data-prev aria-label="Previous collections"><ChevronLeft class="i" aria-hidden="true" /></button>
-        <button class="rail-btn" type="button" data-next aria-label="Next collections"><ChevronRight class="i" aria-hidden="true" /></button>
-      </div>
-    </div>
-    <ul class="track" tabindex="0" aria-label="Breed collections, scroll for more">
-      {collections.map((c) => (
-        <li><a class="tile" href={c.href} data-track={`collection_${c.img}`}>
-          <img src={`/images/collections/${c.img}.webp`} width="440" height="330" alt={c.alt} loading="lazy" decoding="async">
-          <span>{c.name}</span>
-        </a></li>
-      ))}
-    </ul>
-    <div class="dots" aria-hidden="true"></div>
-  </div>
-
-  <!-- Popular breeds, same section -->
+  <!-- Popular breeds: one compact row -->
   <div class="block breeds" data-rail>
     <div class="rail-top">
       <div class="sec-head reveal">
@@ -530,8 +499,8 @@ header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px so
 .top-call strong{font:600 18px/1.2 var(--head)}
 
 /* ===== Hero ===== */
-.hero{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:clamp(600px,84vh,800px);padding:clamp(48px,6vw,88px) 0;color:#fff;background:var(--slate)}
-.hero-grid{display:grid;width:min(1480px,100% - clamp(40px,7vw,112px));margin-inline:clamp(20px,4.5vw,72px) auto;grid-template-columns:minmax(0,620px) 1fr;grid-template-areas:"head ." "rest ."}
+.hero{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:clamp(440px,54vh,500px);padding:clamp(36px,4.5vw,60px) 0;color:#fff;background:var(--slate)}
+.hero-grid{display:grid;width:min(1480px,100% - clamp(40px,7vw,112px));margin-inline:clamp(20px,4.5vw,72px) auto;grid-template-columns:minmax(0,800px) 1fr;grid-template-areas:"head ." "rest ."}
 .hero-head{grid-area:head}
 .hero-rest{grid-area:rest}
 .hero-media{position:absolute;inset:0 0 0 auto;width:min(80%,1360px);z-index:-1}
@@ -542,15 +511,15 @@ header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px so
   linear-gradient(0deg,rgba(39,50,61,.5) 0%,rgba(39,50,61,0) 30%)}
 /* progressive blur: strongest under the copy, fading out toward the subject */
 .hero-media::before{content:"";position:absolute;inset:0;z-index:1;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 22%,transparent 42%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 22%,transparent 42%)}
-.hero h1{color:#fff;font-size:clamp(36px,4.7vw,64px);font-weight:700;letter-spacing:-.022em;line-height:1.06;text-shadow:0 2px 24px rgba(39,50,61,.35)}
+.hero h1{color:#fff;font-size:clamp(34px,4.1vw,56px);font-weight:700;letter-spacing:-.022em;line-height:1.06;text-shadow:0 2px 24px rgba(39,50,61,.35)}
 .hero h1 em{font-style:normal;color:var(--blue);background:linear-gradient(transparent 84%,rgba(253,126,20,.7) 84%);padding-inline:2px}
-.hero .sub{margin-top:26px;font-size:clamp(18px,1.55vw,20px);color:rgba(255,255,255,.92);max-width:30em;text-shadow:0 1px 14px rgba(39,50,61,.45)}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:34px}
+.hero .cta-row{margin-top:28px}
 .hero .link-btn{color:#fff;text-decoration-color:rgba(255,255,255,.5)}
 .hero .link-btn:hover{color:var(--blue-l)}
 .phone-line{margin-top:18px;font-size:16px;color:var(--muted)}
 .phone-line a{font-weight:700;color:var(--slate);white-space:nowrap}
-.proof{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:38px;padding-top:26px;border-top:1px solid rgba(255,255,255,.22)}
+.proof{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.22)}
 .proof a{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-size:15px;line-height:1.3}
 .proof a:hover span.t{text-decoration:underline}
 .stars{display:flex;gap:2px;color:var(--amber)}
@@ -719,12 +688,12 @@ textarea.cs-input{min-height:110px;resize:vertical}
   .hero{flex-direction:column;align-items:stretch;min-height:0;padding:0}
   .hero-grid{display:contents}
   .hero-head,.hero-rest{width:min(1160px,100% - 40px);margin-inline:auto}
-  .hero-head{order:1;padding:34px 0 26px}
+  .hero-head{order:1;padding:28px 0 22px}
   .hero-media{order:2;position:relative;inset:auto;width:100%;aspect-ratio:4/3;max-height:520px;z-index:0}
   .hero-media::before{display:none}
   .hero-media::after{background:linear-gradient(180deg,var(--slate) 0%,rgba(51,65,79,0) 26%,rgba(51,65,79,0) 52%,rgba(39,50,61,.82) 100%)}
   .offer-card{right:auto;left:20px;bottom:18px;width:min(320px,calc(100% - 40px))}
-  .hero-rest{order:3;padding:28px 0 clamp(40px,8vw,56px)}
+  .hero-rest{order:3;padding:6px 0 clamp(32px,7vw,44px)}
   .trust ul{grid-template-columns:1fr 1fr}
   .trust li:nth-child(odd){border-left:0;padding-left:0}
   .trust li:nth-child(n+3){border-top:1px solid var(--line)}
@@ -744,7 +713,11 @@ textarea.cs-input{min-height:110px;resize:vertical}
   .top-actions .btn-call-m{display:inline-flex}
   .hero h1{font-size:34px}
   .cta-row .btn-lg{width:100%}
-  .hero-media{aspect-ratio:5/4}
+  .hero-media{aspect-ratio:4/3}
+  .hero-media img.bg{object-position:56% 22%}
+  .offer-card{padding:12px 16px}
+  .offer-card .v{font-size:20px;margin-top:0}
+  .offer-card .n{font-size:13px;margin-top:2px}
   .offer-card{left:14px;right:14px;bottom:14px;width:auto}
   .trust ul{grid-template-columns:1fr}
   .trust li{border-left:0!important;padding-left:0!important;padding-block:18px}
@@ -767,10 +740,9 @@ textarea.cs-input{min-height:110px;resize:vertical}
 }
 .btn-call-m{display:none}
 
-/* ===== Scroll lists (breed collections + popular breeds) ===== */
-.rail{background:var(--blue-tint)}
-.rail .block+.block{margin-top:clamp(44px,5.5vw,72px)}
-.rail .sec-head{margin-bottom:26px}
+/* ===== Popular breeds (single scroll row) ===== */
+.rail{background:var(--blue-tint);padding:clamp(36px,5vw,60px) 0}
+.rail .sec-head{margin-bottom:22px}
 .rail-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
 .rail-btns{display:flex;gap:10px;flex:none;padding-bottom:34px}
 .rail-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--blue);background:var(--blue);color:var(--on-blue);cursor:pointer;display:grid;place-items:center;transition:background-color .18s ease-out,color .18s ease-out,opacity .18s ease-out}
