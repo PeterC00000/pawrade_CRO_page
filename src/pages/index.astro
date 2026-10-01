@@ -1,73 +1,887 @@
 ---
-import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
-import { PawPrint, ShieldCheck, HeartHandshake, ArrowRight } from '@lucide/astro';
+import '@fontsource-variable/montserrat/index.css';
+import {
+	Phone, ShieldCheck, HeartPulse, Truck, MessageCircle, Check, X, ArrowRight, Star, ChevronLeft, ChevronRight,
+} from '@lucide/astro';
 
-const features = [
-	{ icon: ShieldCheck, title: 'Trusted breeders', text: 'Every breeder is vetted before they list a puppy.' },
-	{ icon: HeartHandshake, title: 'Health guarantee', text: 'Your puppy comes with a written health guarantee.' },
-	{ icon: PawPrint, title: 'Perfect match', text: 'Find a puppy that fits your home and lifestyle.' },
+const PUPPIES = 'https://www.pawrade.com/puppies'; // TODO: confirm the Available Puppies URL
+const PHONE = '(888) 729-8812';
+
+const trust = [
+	{ icon: ShieldCheck, title: 'Verified breeders', text: 'Background checked before they list a puppy' },
+	{ icon: HeartPulse, title: 'Health guarantee', text: 'Vet-checked, vaccinated and guaranteed' },
+	{ icon: Truck, title: 'Safe pickup or delivery', text: 'Wherever you call home' },
+	{ icon: MessageCircle, title: 'Concierge support', text: 'A real person, every step of the way' },
 ];
+
+const compare = [
+	['No scams, full protection', 'Higher risk of scams and fraud'],
+	['Quick, honest responses', 'Slower, inconsistent replies'],
+	['Fully vetted breeders', 'Backyard breeders and puppy mills'],
+	['Support throughout the process', 'Stuck with your gut feeling'],
+];
+
+// Breed collections (lifestyle). Point each href at its collection page when the URLs are confirmed.
+const collections = [
+	{ name: 'Apartment-Friendly Dogs', img: 'apartment', alt: 'A Cavalier King Charles Spaniel puppy walking across a living room floor' },
+	{ name: 'Small Dogs', img: 'small', alt: 'A Yorkshire Terrier puppy on a soft blanket' },
+	{ name: 'Family Dogs', img: 'family', alt: 'A smiling girl hugging a puppy in autumn leaves' },
+	{ name: 'Hypoallergenic Dogs', img: 'hypoallergenic', alt: 'A curly cream Mini Goldendoodle puppy' },
+	{ name: 'Emotional Support Dogs', img: 'emotional-support', alt: 'A Cavapoo puppy looking up at the camera' },
+].map((c) => ({ ...c, href: PUPPIES }));
+
+// Popular breeds, ordered best seller to slowest. A breed shows once it has a photo in public/images/breeds/.
+// To add one: drop <img>.webp (360x480) in that folder and set `img` below.
+const breedsRanked = [
+	{ name: 'Mini Dachshunds', img: 'mini-dachshund', alt: 'A Mini Dachshund puppy sitting in a red wagon' },
+	{ name: 'Chihuahuas', img: 'chihuahua', alt: 'A black and white Chihuahua puppy' },
+	{ name: 'Cavalier King Charles Spaniels', img: 'cavalier', alt: 'A Cavalier King Charles Spaniel puppy on the grass' },
+	{ name: 'Yorkshire Terriers', img: 'yorkie', alt: 'A Yorkshire Terrier puppy standing beside a plant' },
+	{ name: 'Cavapoos', img: 'cavapoo', alt: 'A Cavapoo puppy sitting on a blanket' },
+	{ name: 'French Bulldogs', img: 'french-bulldog', alt: 'A French Bulldog puppy with blue eyes' },
+	{ name: 'Shih Tzus', img: null },
+	{ name: 'Maltipoos', img: null },
+	{ name: 'Mini Bernedoodles', img: null },
+	{ name: 'Mini Goldendoodles', img: 'mini-goldendoodle', alt: 'A curly Mini Goldendoodle puppy on a porch' },
+	{ name: 'Golden Retrievers', img: 'golden-retriever', alt: 'A Golden Retriever puppy' },
+	{ name: 'Toy Poodles', img: null },
+	{ name: 'Pomeranians', img: 'pomeranian', alt: 'A fluffy orange Pomeranian puppy' },
+	{ name: 'Havanese', img: null },
+	{ name: 'Labrador Retrievers', img: null },
+	{ name: 'Beagles', img: 'beagle', alt: 'A Beagle puppy with floppy ears' },
+	{ name: 'Miniature Poodles', img: 'miniature-poodle', alt: 'A curly Miniature Poodle puppy up close' },
+	{ name: 'Boston Terriers', img: null },
+	{ name: 'Boxers', img: 'boxer', alt: 'A Boxer puppy sitting up' },
+];
+const breeds = breedsRanked.filter((b) => b.img).map((b) => ({ ...b, href: PUPPIES }));
+
+const reviews = [
+	{ img: 'rev-bart.jpg', w: 103, h: 180, alt: 'Natalie holding Bart, her Shih Tzu puppy', quote: 'Reliable service, quick response, good communication, clear instructions, healthy adorable puppy. Would recommend!', pup: 'Bart the Shih Tzu', who: 'Natalie O.' },
+	{ img: 'rev-penelope.jpg', w: 103, h: 179, alt: 'Gregg holding Penelope, his Golden Retriever puppy', quote: 'I was blown away by how easy the process was. I would absolutely use them again and recommend them to friends and family.', pup: 'Penelope the Golden Retriever', who: 'Gregg L.' },
+	{ img: 'rev-lucas.jpg', w: 276, h: 322, alt: 'Teena holding Lucas, her Golden Retriever puppy, after delivery', quote: 'Delivered me the most amazing puppy. He was well taken care of on the trip from Indiana to Alabama and when he got here he was happy and healthy!', pup: 'Lucas the Golden Retriever', who: 'Teena M., Auburn, AL' },
+	{ img: 'rev-bruiser.jpg', w: 191, h: 295, alt: 'Vivian and her husband holding Bruiser, their Beagle puppy', quote: 'They responded to any inquiry and that included weekends. The pampered pup delivery service individuals were very caring.', pup: 'Bruiser the Beagle', who: 'Vivian R., New Providence, NJ' },
+];
+
+const steps = [
+	['Tell us what you’re looking for', 'Browse available puppies, or call or message a concierge. We read every message, daily 9AM–11PM EST.'],
+	['Meet your breeder match', 'We connect you with a background-checked, verified breeder and answer your questions along the way.'],
+	['Bring your puppy home', 'Safe pickup or delivery, backed by the Pawrade Health Guarantee.'],
+];
+
+const pledges = [
+	['Health Guarantee', 'Making the commitment to add a furry friend does not end when you get home. As fellow puppy owners, we know the importance of having a happy and healthy puppy.'],
+	['No Puppy Mill Pledge', 'We have zero tolerance toward puppy mills and pride ourselves in connecting you with honest and reputable breeders where puppies are raised with love and compassion.'],
+	['Safe Journey Home', 'No matter where you are located, we do our best to ensure your puppy has as close to an enjoyable and stress-free experience as possible.'],
+];
+
+const faq = [
+	{ q: 'How do I know a breeder is legitimate?', a: 'Every breeder on Pawrade is background checked and verified before they can list a puppy. That is the difference between a vetted marketplace and an anonymous classified ad.' },
+	{ q: 'What if my puppy gets sick?', a: 'Every puppy is vet-checked and vaccinated, and backed by the Pawrade Health Guarantee.', link: { href: 'https://www.pawrade.com/', text: 'Read the full guarantee', ext: true } },
+	{ q: 'Is my payment protected?', a: 'Yes. Pawrade offers protected payments, and we do not work with puppy mills.' },
+	{ q: 'Can you deliver my puppy?', a: 'Safe pickup or delivery is available wherever you live. A concierge will walk you through the options for your location.' },
+	{ q: 'How does the $200 offer work?', a: 'For a limited time, you take $200 off the advertised price of any puppy.', link: { href: '#offer-terms', text: 'See the offer terms' } },
+];
+
+const schema = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{ '@type': 'Organization', name: 'Pawrade', url: 'https://www.pawrade.com', telephone: '+1-888-729-8812' },
+		{ '@type': 'FAQPage', mainEntity: faq.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+	],
+};
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Find a healthy puppy from a trusted breeder with Pawrade." />
-		<title>Pawrade | Find Your Perfect Puppy</title>
-	</head>
-	<body>
-		<main>
-			<section class="hero">
-				<h1>Find Your Perfect Puppy</h1>
-				<p>Meet healthy puppies from trusted breeders, backed by Pawrade.</p>
-				<a class="cta" href="https://www.pawrade.com">
-					Browse Puppies <ArrowRight size={20} />
-				</a>
-			</section>
-			<section class="features">
-				{features.map(({ icon: Icon, title, text }) => (
-					<div class="card">
-						<Icon size={32} />
-						<h2>{title}</h2>
-						<p>{text}</p>
-					</div>
-				))}
-			</section>
-		</main>
-	</body>
-</html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find a Healthy Puppy from a Verified Breeder | Pawrade</title>
+<meta name="description" content="Find a healthy puppy from a verified breeder. No scams, no puppy mills. Health guarantee, safe delivery and a real concierge. Save $200 for a limited time.">
+<!-- PROTOTYPE: remove the robots tag below before launch if this page should be indexed. Most paid landing pages stay noindex. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Find a Healthy Puppy from a Verified Breeder | Pawrade">
+<meta property="og:description" content="No scams. No puppy mills. Verified breeders, a health guarantee and a real concierge. $200 off any puppy for a limited time.">
+<meta property="og:image" content="/images/hero-family.jpg">
+<meta property="fb:app_id" content="436584587155125">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#007dab">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="/images/hero-family.webp" type="image/webp" fetchpriority="high">
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</head>
+
+<body>
+<a class="sr-only skip" href="#main-content">Skip to main content</a>
+
+<div class="promo" role="region" aria-label="Current offer">
+  <span class="long">Fall in love with a new best friend: <strong>$200 off the advertised price of any puppy</strong>. Limited time only. </span>
+  <span class="short"><strong>Fall in Love: $200 off any puppy.</strong> Limited time. </span>
+  <a href="#offer-terms">See terms</a>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Pawrade home"><img src="/images/logo.webp" width="454" height="91" alt="Pawrade"></a>
+    <div class="top-actions">
+      <a class="top-call" href="tel:8887298812" data-track="header_call">
+        <small>Talk to a real person, 9AM–11PM EST</small>
+        <strong>{PHONE}</strong>
+      </a>
+      <a class="btn btn-ghost btn-sm btn-call-m" href="tel:8887298812" data-track="header_call_mobile"><Phone class="i" aria-hidden="true" />Call us</a>
+      <a class="btn btn-primary btn-sm btn-find" href={PUPPIES} data-track="header_find_puppy">Find My Puppy</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Fall in love with a new best friend</p>
+      <h1 id="h1">Find a Healthy Puppy from a <em>Verified Breeder.</em> No Scams. No Puppy Mills.</h1>
+      <p class="sub">For over 15 years, Pawrade has connected families with puppies from background-checked breeders. Every puppy is vet-checked, and a real person helps you from your first message to home day.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="hero_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
+        <button class="link-btn" type="button" data-open-form data-track="hero_concierge">Talk to a Puppy Concierge</button>
+      </div>
+      <p class="phone-line">Prefer to call? <a href="tel:8887298812" data-track="hero_call">{PHONE}</a> · open daily 9AM–11PM EST</p>
+
+      <div class="proof">
+        <a href="https://www.trustpilot.com/review/pawrade.com" target="_blank" rel="noopener noreferrer" data-track="proof_trustpilot">
+          <span class="stars" aria-hidden="true">{[0,1,2,3,4].map(() => <Star />)}</span>
+          <span class="t"><b>7,470</b> reviews on Trustpilot</span>
+        </a>
+        <a href="https://www.pawrade.com/reviews/" target="_blank" rel="noopener noreferrer" data-track="proof_site_reviews">
+          <span class="stars" aria-hidden="true">{[0,1,2,3,4].map(() => <Star />)}</span>
+          <span class="t"><b>18,917</b> reviews on Pawrade.com</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <img src="/images/hero-family.webp" width="814" height="628" alt="A mother and her son laughing with a new puppy among autumn leaves" fetchpriority="high" loading="eager">
+      <div class="offer-card">
+        <div class="k">Fall in Love offer</div>
+        <div class="v">$200 off any puppy</div>
+        <div class="n">Off the advertised price. Limited time only.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST STRIP ================= -->
+<div class="trust">
+  <div class="wrap">
+    <ul aria-label="Why families trust Pawrade">
+      {trust.map(({ icon: Icon, title, text }) => (
+        <li><Icon class="i" aria-hidden="true" /><div><strong>{title}</strong><span>{text}</span></div></li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<!-- ================= BREED COLLECTIONS ================= -->
+<section class="rail" aria-labelledby="h2-collections">
+  <div class="wrap" data-rail>
+    <div class="rail-top">
+      <div class="sec-head reveal">
+        <p class="kicker">Breed collections</p>
+        <h2 id="h2-collections">Perfect puppies for your lifestyle</h2>
+      </div>
+      <div class="rail-btns">
+        <button class="rail-btn" type="button" data-prev aria-label="Previous collections"><ChevronLeft class="i" aria-hidden="true" /></button>
+        <button class="rail-btn" type="button" data-next aria-label="Next collections"><ChevronRight class="i" aria-hidden="true" /></button>
+      </div>
+    </div>
+    <ul class="track" tabindex="0" aria-label="Breed collections, scroll for more">
+      {collections.map((c) => (
+        <li><a class="tile" href={c.href} data-track={`collection_${c.img}`}>
+          <img src={`/images/collections/${c.img}.webp`} width="440" height="330" alt={c.alt} loading="lazy" decoding="async">
+          <span>{c.name}</span>
+        </a></li>
+      ))}
+    </ul>
+    <div class="dots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================= POPULAR BREEDS ================= -->
+<section class="rail breeds alt" aria-labelledby="h2-breeds">
+  <div class="wrap" data-rail>
+    <div class="rail-top">
+      <div class="sec-head reveal">
+        <p class="kicker">Popular breeds</p>
+        <h2 id="h2-breeds">Top breeds picked by people just like you</h2>
+      </div>
+      <div class="rail-btns">
+        <button class="rail-btn" type="button" data-prev aria-label="Previous breeds"><ChevronLeft class="i" aria-hidden="true" /></button>
+        <button class="rail-btn" type="button" data-next aria-label="Next breeds"><ChevronRight class="i" aria-hidden="true" /></button>
+      </div>
+    </div>
+    <ul class="track" tabindex="0" aria-label="Popular breeds, best sellers first, scroll for more">
+      {breeds.map((b) => (
+        <li><a class="tile" href={b.href} data-track={`breed_${b.img}`}>
+          <img src={`/images/breeds/${b.img}.webp`} width="360" height="480" alt={b.alt} loading="lazy" decoding="async">
+          <span>{b.name}</span>
+        </a></li>
+      ))}
+    </ul>
+    <div class="dots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================= COMPARISON ================= -->
+<section aria-labelledby="h2-compare">
+  <div class="wrap compare-wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Why Pawrade</p>
+      <h2 id="h2-compare">Families are choosing Pawrade more than ever</h2>
+      <p>Buying a puppy online should feel safe. Here is what changes when you have someone on your side.</p>
+    </div>
+    <div class="reveal">
+      <table class="compare">
+        <caption class="sr-only">Buying with Pawrade compared with buying on your own</caption>
+        <thead><tr><th scope="col" class="with">With Pawrade</th><th scope="col" class="own">On Your Own</th></tr></thead>
+        <tbody>
+          {compare.map(([w, o]) => (
+            <tr><td class="with"><div><Check class="i" aria-hidden="true" />{w}</div></td><td class="own"><div><X class="i" aria-hidden="true" />{o}</div></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OFFER ================= -->
+<section class="offer" id="offer" aria-labelledby="h2-offer">
+  <div class="grid">
+    <img src="/images/gsd-pumpkin.webp" width="1200" height="628" alt="A German Shepherd puppy resting on a pumpkin in fallen leaves" loading="lazy" decoding="async">
+    <div class="copy reveal">
+      <p class="eyebrow">Fall in Love, limited time</p>
+      <h2 id="h2-offer">Take $200 off the advertised price of any puppy</h2>
+      <p>The leaves are turning and the right puppy is out there. Browse available puppies and the savings come with your match.</p>
+      <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="offer_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
+      <p class="terms" id="offer-terms">Limited-time offer. Applies to the advertised price of any puppy. <a href="https://www.pawrade.com/" target="_blank" rel="noopener noreferrer">See full terms</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="reviews" aria-labelledby="h2-reviews">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Real people. Real puppies.</p>
+      <h2 id="h2-reviews">Over 26,000 reviews from families like yours</h2>
+      <div class="rev-tags">
+        <a href="https://www.trustpilot.com/review/pawrade.com" target="_blank" rel="noopener noreferrer"><b>7,470</b> on Trustpilot</a>
+        <a href="https://www.pawrade.com/reviews/" target="_blank" rel="noopener noreferrer"><b>18,917</b> on Pawrade.com</a>
+      </div>
+    </div>
+
+    <div class="rev-grid">
+      {reviews.map((r) => (
+        <article class="rev reveal">
+          <img src={`/images/${r.img}`} width={r.w} height={r.h} alt={r.alt} loading="lazy" decoding="async">
+          <div class="b">
+            <span class="stars" role="img" aria-label="5 out of 5 stars">{[0,1,2,3,4].map(() => <Star />)}</span>
+            <blockquote>“{r.quote}”</blockquote>
+            <cite><b>{r.pup}</b> with {r.who}</cite>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="read-more"><a href="https://www.pawrade.com/reviews/" target="_blank" rel="noopener noreferrer">Read more reviews</a></p>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="how" aria-labelledby="h2-how">
+  <div class="wrap grid">
+    <img class="reveal" src="/images/walk.webp" width="777" height="628" alt="A woman walking a new puppy on a leash along an autumn path" loading="lazy" decoding="async">
+    <div class="reveal">
+      <div class="sec-head" style="margin-bottom:30px">
+        <p class="kicker">How it works</p>
+        <h2 id="h2-how">From first message to home day</h2>
+      </div>
+      <ol class="steps">
+        {steps.map(([t, p]) => <li><h3>{t}</h3><p>{p}</p></li>)}
+      </ol>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="how_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
+        <button class="link-btn" type="button" data-open-form data-track="how_concierge">Talk to a Puppy Concierge</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GUARANTEE ================= -->
+<section class="promise" aria-labelledby="h2-promise">
+  <div class="wrap grid">
+    <div class="reveal">
+      <p class="kicker">Our promise</p>
+      <h2 id="h2-promise">From reputable breeders to loving homes</h2>
+      <div class="pledges">
+        {pledges.map(([t, p]) => <article><h3>{t}</h3><p>{p}</p></article>)}
+      </div>
+      <a class="more" href="https://www.pawrade.com/" target="_blank" rel="noopener noreferrer">Read the full Health Guarantee</a>
+    </div>
+    <div class="promise-media reveal">
+      <img class="ph" src="/images/leaves-girl.webp" width="1200" height="628" alt="A smiling girl crouching in autumn leaves with her new puppy" loading="lazy" decoding="async">
+      <img class="badge" src="/images/fursure.jpg" width="300" height="300" alt="FurSure Certified 50-point badge" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" aria-labelledby="h2-faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Questions</p>
+      <h2 id="h2-faq">Good questions to ask before you buy</h2>
+    </div>
+    <div class="list reveal">
+      {faq.map(({ q, a, link }) => (
+        <details>
+          <summary>{q}<span class="pm" aria-hidden="true"></span></summary>
+          <div class="ans">{a}{link && <> <a href={link.href} {...(link.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.text}</a>.</>}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final" aria-labelledby="h2-final">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="copy">
+        <h2 id="h2-final">Your perfect puppy is waiting</h2>
+        <p>Browse vet-checked puppies from verified breeders, and save $200 for a limited time.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="final_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
+          <button class="link-btn" type="button" data-open-form data-track="final_concierge">Talk to a Puppy Concierge</button>
+        </div>
+        <p class="phone-line">Or call <a href="tel:8887298812" data-track="final_call">{PHONE}</a>, daily 9AM–11PM EST</p>
+      </div>
+      <img src="/images/corgi.webp" width="1200" height="628" alt="A little girl in a red jacket hugging a corgi puppy on a log" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <img src="/images/logo-white.webp" width="600" height="120" alt="Pawrade">
+      <p style="margin-top:14px">Call <a href="tel:8887298812">{PHONE}</a><br>Daily 9AM–11PM EST</p>
+    </div>
+    <ul>
+      <li><a href="https://www.pawrade.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+      <li><a href="https://www.pawrade.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+      <li><a href="https://www.pawrade.com/" target="_blank" rel="noopener noreferrer">Health Guarantee</a></li>
+    </ul>
+    <p class="fine">© 2026 Pawrade. Offer applies to the advertised price of any puppy, for a limited time.</p>
+  </div>
+</footer>
+
+<!-- Mobile sticky action bar -->
+<div class="mbar" role="region" aria-label="Quick actions">
+  <a class="btn btn-primary" href={PUPPIES} data-track="mbar_find_puppy">Find My Puppy</a>
+  <button class="btn btn-ghost" type="button" data-open-form data-track="mbar_concierge"><MessageCircle class="i" aria-hidden="true" />Message us</button>
+</div>
+
+<!-- ================= CONCIERGE FORM (markup follows pawrade.com contact form) ================= -->
+<dialog id="concierge" aria-labelledby="cs-title">
+  <div class="cs-form-card cs-form">
+    <div class="cs-form-head">
+      <div class="cs-eyebrow">Talk to a Puppy Concierge</div>
+      <div class="cs-form-head-title" id="cs-title">We read every message, daily 9AM–11PM EST.</div>
+      <button class="cs-close" type="button" aria-label="Close form" data-close-form><X class="i" aria-hidden="true" /></button>
+    </div>
+    <div class="cs-form-body">
+      <div id="dvContact">
+        <!--
+          PROTOTYPE ONLY: this form does not post anywhere.
+          For production, point it at the live endpoint: action="/contact/?Length=4" method="post"
+          with the __RequestVerificationToken and data-ajax attributes from the site template.
+        -->
+        <form id="contactForm" name="contactForm" role="form" novalidate>
+          <div class="cs-form-row">
+            <div class="form-group">
+              <label for="FirstName">First name</label>
+              <input autocomplete="given-name" class="cs-input required" id="FirstName" maxlength="50" minlength="2" name="FirstName" placeholder="Jordan" type="text" required>
+              <span class="err">Please enter your first name.</span>
+            </div>
+            <div class="form-group">
+              <label for="LastName">Last name</label>
+              <input autocomplete="family-name" class="cs-input required" id="LastName" maxlength="50" minlength="2" name="LastName" placeholder="Alvarez" type="text" required>
+              <span class="err">Please enter your last name.</span>
+            </div>
+          </div>
+          <div class="cs-form-row">
+            <div class="form-group">
+              <label for="EmailAddress">Email address</label>
+              <input autocomplete="email" class="cs-input required email" id="EmailAddress" name="EmailAddress" placeholder="you@example.com" type="email" required>
+              <span class="err">Please enter a valid email address.</span>
+            </div>
+            <div class="form-group">
+              <label for="PhoneNumber">Phone number</label>
+              <input autocomplete="tel" class="cs-input required phone" id="PhoneNumber" name="PhoneNumber" placeholder="(555) 555-0123" type="tel" required>
+              <span class="err">Please enter a valid phone number.</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="csTopicSelect">What's this about?</label>
+            <select class="cs-input" id="csTopicSelect" name="Topic">
+              <option value="Looking for a puppy" selected>Looking for a puppy</option>
+              <option value="I've reserved a puppy">I've reserved a puppy</option>
+              <option value="Travel day question">Travel day question</option>
+              <option value="Health or guarantee">Health or guarantee</option>
+              <option value="I'm a breeder">I'm a breeder</option>
+              <option value="Something else">Something else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="csMessage">Message</label>
+            <textarea class="cs-input required" cols="20" id="csMessage" maxlength="5000" minlength="10" name="Message" placeholder="e.g. We have two kids under 6 and a small yard. Which of your breeds fit? Or ask about a specific puppy by name." rows="4" required></textarea>
+            <span class="err">Please add a short message (at least 10 characters).</span>
+          </div>
+          <label class="cs-consent">
+            <input checked id="MarketingConsent" name="MarketingConsent" type="checkbox" value="true">
+            <span>I understand and agree to receive marketing communications from Pawrade for which I may unsubscribe at any point in time.</span>
+          </label>
+          <button id="btnSubmit" type="submit" class="btn btn-primary btn-lg cs-btn cs-btn-solid" title="Send message">Send message</button>
+          <div class="cs-form-foot">Want an answer right now? Call <a href="tel:8887298812" class="cs-link">(888) 729-8812</a>, or after hours <a href="tel:8548002400" class="cs-link">854-800-2400</a>.</div>
+        </form>
+        <div class="thanks" role="status" aria-live="polite" tabindex="-1">
+          <h3>Thank you, your message is in.</h3>
+          <p>A Puppy Concierge will reply soon. We read every message, daily 9AM–11PM EST. If it's urgent, call <a href="tel:8887298812">(888) 729-8812</a>.</p>
+          <p style="margin-top:20px"><a class="btn btn-primary" href="https://www.pawrade.com/puppies">Browse available puppies</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <style is:global>
-	:root { --ink: #222; --bg: #fff; --accent: #222; }
-	body { margin: 0; font-family: 'Poppins', system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+:root{
+  --blue:#00a7e1;        /* brand blue: accents, borders, large text */
+  --blue-d:#007dab;      /* same hue family, darkened so white text passes WCAG AA (4.6:1) */
+  --slate:#274553;       /* re-tinted from #33414f to share the brand blue's hue (~199deg) */
+  --slate-d:#1b3039;     /* footer / deepest tone */
+  --ink2:#3b5361;        /* body copy, blue-tinted slate */
+  --orange:#fd7e14;      /* accent: CTAs, promo bar, highlights (use slate text on it) */
+  --orange-d:#b8470f;    /* orange for small text on white, passes AA */
+  --orange-l:#ffa44f;    /* orange for small text on dark slate, passes AA */
+  --amber:#f5a623;
+  --grey:#f1f7fa;
+  --line:#d8e5ec;
+  --muted:#4f6573;
+  --white:#fff;
+  --radius:14px;
+  --shadow:0 10px 30px rgba(39,69,83,.14);
+  --head:'Poppins',system-ui,sans-serif;
+  --body:'Montserrat Variable','Montserrat',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;font-family:var(--body);font-size:18px;line-height:1.6;color:var(--slate);background:#fff}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3{font-family:var(--head);color:var(--slate);line-height:1.15;margin:0}
+p{margin:0}
+a{color:var(--blue-d)}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip:focus{position:fixed;left:12px;top:12px;width:auto;height:auto;clip:auto;margin:0;padding:12px 18px;background:#fff;color:var(--slate);z-index:100;border-radius:8px;box-shadow:var(--shadow)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+svg.i{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:52px;padding:0 28px;border-radius:999px;border:2px solid transparent;font:600 17px/1 var(--head);text-decoration:none;cursor:pointer;transition:background-color .18s ease-out,color .18s ease-out,border-color .18s ease-out,transform .18s ease-out}
+.btn-primary{background:var(--orange);color:var(--slate)}
+.btn-primary:hover{background:#ec6f0a}
+.btn-blue{background:var(--blue-d);color:#fff}
+.btn-blue:hover{background:#00668d}
+.btn-ghost{background:#fff;color:var(--slate);border-color:var(--slate)}
+.btn-ghost:hover{background:var(--slate);color:#fff}
+.btn-light{background:#fff;color:var(--blue-d)}
+.btn-light:hover{background:var(--grey)}
+.btn-lg{min-height:60px;padding:0 36px;font-size:19px}
+.btn-sm{min-height:44px;padding:0 20px;font-size:15px}
+.link-btn{background:none;border:0;padding:10px 2px;font:600 17px/1.2 var(--head);color:var(--blue-d);text-decoration:underline;text-underline-offset:4px;cursor:pointer;min-height:44px}
+.link-btn:hover{color:#00668d}
+
+/* ===== Promo bar + header ===== */
+.promo{background:var(--orange);color:var(--slate);font:500 15px/1.35 var(--head);text-align:center;padding:9px 16px}
+.promo a{color:var(--slate);font-weight:600;text-underline-offset:3px;white-space:nowrap}
+.promo .long{display:inline}.promo .short{display:none}
+header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.logo img{height:38px;width:auto}
+.top-actions{display:flex;align-items:center;gap:12px}
+.top-call{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2;text-decoration:none;color:var(--slate);margin-right:6px}
+.top-call small{font:500 13px/1.2 var(--body);color:var(--muted)}
+.top-call strong{font:600 18px/1.2 var(--head)}
+
+/* ===== Hero ===== */
+.hero{padding:clamp(32px,5vw,64px) 0 clamp(40px,6vw,72px)}
+.hero .wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,64px);align-items:center}
+.eyebrow{font:600 14px/1.3 var(--head);letter-spacing:.12em;text-transform:uppercase;color:var(--orange-d);margin-bottom:16px}
+.hero h1{font-size:clamp(32px,3.9vw,50px);font-weight:700;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--blue-d);background:linear-gradient(transparent 82%,rgba(253,126,20,.45) 82%);padding-inline:2px}
+.hero .sub{margin-top:22px;font-size:clamp(18px,1.6vw,20px);color:var(--ink2);max-width:34em}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:30px}
+.phone-line{margin-top:18px;font-size:16px;color:var(--muted)}
+.phone-line a{font-weight:700;color:var(--slate);white-space:nowrap}
+.proof{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.proof a{display:flex;align-items:center;gap:10px;color:var(--slate);text-decoration:none;font-size:15px;line-height:1.3}
+.proof a:hover span.t{text-decoration:underline}
+.stars{display:flex;gap:2px;color:var(--amber)}
+.stars svg{width:18px;height:18px;fill:currentColor;stroke:none}
+.proof b{font-family:var(--head);font-weight:600}
+.hero-media{position:relative}
+.hero-media img{width:100%;aspect-ratio:814/628;object-fit:cover;border-radius:22px}
+.offer-card{position:absolute;left:-22px;bottom:26px;max-width:290px;background:#fff;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border-left:6px solid var(--orange)}
+.offer-card .k{font:600 12.5px/1.2 var(--head);letter-spacing:.1em;text-transform:uppercase;color:var(--orange-d)}
+.offer-card .v{font:700 24px/1.15 var(--head);margin-top:6px}
+.offer-card .n{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+/* ===== Trust strip ===== */
+.trust{background:var(--grey);border-block:1px solid var(--line)}
+.trust ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.trust li{display:flex;gap:14px;align-items:flex-start;padding:26px 22px;border-left:1px solid var(--line)}
+.trust li:first-child{border-left:0;padding-left:0}
+.trust svg.i{width:30px;height:30px;color:var(--blue-d);margin-top:2px;stroke-width:1.8}
+.trust strong{display:block;font:600 16.5px/1.25 var(--head)}
+.trust span{display:block;font-size:14.5px;line-height:1.4;color:var(--muted);margin-top:4px}
+
+/* ===== Section scaffolding ===== */
+section{padding:clamp(52px,7vw,92px) 0}
+.sec-head{max-width:40em;margin-bottom:34px}
+.sec-head h2{font-size:clamp(28px,3.4vw,42px);font-weight:700}
+.sec-head p{margin-top:14px;color:var(--ink2)}
+.kicker{font:600 14px/1.3 var(--head);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d);margin-bottom:12px}
+
+/* ===== Comparison ===== */
+.compare-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,5vw,72px);align-items:start}
+.compare-wrap .sec-head{margin-bottom:0;position:sticky;top:110px}
+table.compare{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:17px}
+.compare th{font:600 18px/1.2 var(--head);text-align:left;padding:20px 22px}
+.compare th.with{background:var(--blue-d);color:#fff}
+.compare th.own{background:var(--slate);color:#fff}
+.compare td{padding:18px 22px;vertical-align:middle;border-top:1px solid var(--line);line-height:1.35}
+.compare td.with{background:#fff;font-weight:600}
+.compare td.own{background:var(--grey);color:var(--muted)}
+.compare td div{display:flex;gap:12px;align-items:center}
+.compare td.with svg{color:var(--blue-d);stroke-width:2.6}
+.compare td.own svg{color:#8a5a52;stroke-width:2.6}
+
+/* ===== Offer band ===== */
+.offer{padding:0;background:var(--slate);color:#fff}
+.offer .grid{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+.offer img{width:100%;height:100%;object-fit:cover;min-height:340px}
+.offer .copy{padding:clamp(36px,5vw,72px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.offer .eyebrow{color:var(--orange-l)}
+.offer h2{color:#fff;font-size:clamp(28px,3.4vw,44px)}
+.offer p{margin-top:16px;color:#e7ecf0;max-width:30em}
+.offer .btn{margin-top:28px}
+.offer .terms{margin-top:14px;font-size:14px;color:#c9d3db}
+.offer .terms a{color:#fff}
+
+/* ===== Reviews ===== */
+.reviews{background:#fff}
+.rev-tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.rev-tags a{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:8px 18px;border:1.5px solid var(--line);border-radius:999px;text-decoration:none;color:var(--slate);font-size:15px;background:var(--grey)}
+.rev-tags a:hover{border-color:var(--slate)}
+.rev-tags b{font-family:var(--head)}
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.rev{display:flex;gap:20px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 14px rgba(39,69,83,.07)}
+.rev img{width:112px;flex:none;object-fit:cover;align-self:stretch}
+.rev .b{padding:20px 22px 20px 0}
+.rev blockquote{margin:10px 0 14px;font-size:17.5px;line-height:1.5}
+.rev cite{font-style:normal;font-size:15px;color:var(--muted)}
+.rev cite b{color:var(--blue-d);font-family:var(--head);font-weight:600}
+.read-more{margin-top:26px;font-size:16px}
+
+/* ===== How it works ===== */
+.how{background:var(--grey)}
+.how .grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,72px);align-items:center}
+.how img{width:100%;border-radius:22px;aspect-ratio:777/628;object-fit:cover}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 30px 74px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:-4px;font:700 40px/1 var(--head);color:var(--blue-d);width:52px}
+.steps li:not(:last-child)::after{content:"";position:absolute;left:18px;top:48px;bottom:8px;width:2px;background:var(--line)}
+.steps h3{font-size:21px;font-weight:600}
+.steps p{margin-top:6px;color:var(--ink2)}
+.how .cta-row{margin-top:34px}
+
+/* ===== Guarantee ===== */
+.promise{background:var(--slate);color:#fff}
+.promise .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center}
+.promise h2{color:#fff;font-size:clamp(28px,3.4vw,42px)}
+.promise .kicker{color:var(--orange-l)}
+.pledges{margin-top:30px;border-top:1px solid rgba(255,255,255,.22)}
+.pledges article{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.pledges h3{color:#fff;font-size:20px;font-weight:600}
+.pledges p{margin-top:6px;color:#e2e8ed;font-size:17px}
+.promise .more{display:inline-block;margin-top:24px;color:#fff;font-weight:600}
+.promise-media{position:relative}
+.promise-media img.ph{width:100%;border-radius:22px;aspect-ratio:1/1;object-fit:cover;object-position:62% center}
+.badge{position:absolute;right:-14px;bottom:-22px;width:132px;height:132px;border-radius:50%;box-shadow:var(--shadow);background:#fff}
+
+/* ===== FAQ ===== */
+.faq .list{max-width:820px}
+details{border-bottom:1px solid var(--line)}
+details:first-child{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 4px;font:600 19px/1.35 var(--head);min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary .pm{flex:none;width:28px;height:28px;position:relative;color:var(--blue-d)}
+summary .pm::before,summary .pm::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:2.5px;background:currentColor;transform:translate(-50%,-50%);transition:transform .18s ease-out}
+summary .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+details[open] summary .pm::after{transform:translate(-50%,-50%) rotate(0)}
+details .ans{padding:0 4px 24px;color:var(--ink2);max-width:46em}
+
+/* ===== Final CTA ===== */
+.final{padding:0 0 clamp(52px,7vw,92px)}
+.final .card{display:grid;grid-template-columns:1.05fr .95fr;background:var(--blue-d);color:#fff;border-radius:26px;overflow:hidden}
+.final .copy{padding:clamp(32px,5vw,64px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.final h2{color:#fff;font-size:clamp(30px,3.8vw,46px)}
+.final p{margin-top:16px;color:#e8f6fc;max-width:28em}
+.final .cta-row .link-btn{color:#fff}
+.final .phone-line{color:#e8f6fc}
+.final .phone-line a{color:#fff}
+.final img{width:100%;height:100%;object-fit:cover;min-height:300px}
+
+/* ===== Footer ===== */
+footer{background:var(--slate-d);color:#cfd8df;padding:44px 0 40px;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:28px 48px;justify-content:space-between;align-items:flex-start}
+footer img{height:34px;width:auto}
+footer a{color:#fff}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px}
+footer li a{display:inline-block;padding:10px 0}
+footer .fine{width:100%;border-top:1px solid rgba(255,255,255,.14);padding-top:22px;font-size:13.5px;color:#aebac4}
+
+/* ===== Mobile sticky bar ===== */
+.mbar{display:none}
+
+/* ===== Concierge dialog (form from pawrade.com contact page) ===== */
+dialog{border:0;padding:0;border-radius:20px;width:min(640px,100% - 24px);max-height:calc(100dvh - 24px);box-shadow:0 30px 80px rgba(20,30,40,.35);color:var(--slate);background:#fff}
+dialog::backdrop{background:rgba(27,48,57,.62)}
+.cs-form-card{display:block}
+.cs-form-head{padding:26px 28px 18px;border-bottom:1px solid var(--line);position:relative;padding-right:70px}
+.cs-eyebrow{font:600 13px/1.2 var(--head);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.cs-form-head-title{font:600 21px/1.3 var(--head);margin-top:8px}
+.cs-close{position:absolute;right:14px;top:14px;width:46px;height:46px;border-radius:50%;border:0;background:var(--grey);color:var(--slate);cursor:pointer;display:grid;place-items:center}
+.cs-close:hover{background:var(--line)}
+.cs-form-body{padding:22px 28px 28px}
+.cs-form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font:600 14.5px/1.3 var(--head);margin-bottom:6px}
+.cs-input{width:100%;min-height:50px;padding:12px 14px;font:500 17px/1.3 var(--body);color:var(--slate);background:#fff;border:1.5px solid #9aa7b2;border-radius:10px}
+textarea.cs-input{min-height:110px;resize:vertical}
+.cs-input:focus{outline:3px solid var(--blue);outline-offset:1px;border-color:var(--blue-d)}
+.cs-input[aria-invalid="true"]{border-color:#b3261e}
+.err{display:none;color:#b3261e;font-size:14px;margin-top:5px}
+.cs-input[aria-invalid="true"]+.err{display:block}
+.cs-consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.45;color:var(--muted);margin:4px 0 18px}
+.cs-consent input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--blue-d)}
+.cs-btn-solid{width:100%}
+.cs-form-foot{margin-top:16px;font-size:15px;color:var(--muted);line-height:1.5}
+.cs-form-foot a{font-weight:700;color:var(--slate);white-space:nowrap}
+.thanks{display:none;padding:10px 0 6px}
+.thanks h3{font-size:24px}
+.thanks p{margin-top:10px;color:var(--ink2)}
+.is-sent form{display:none}.is-sent .thanks{display:block}
+
+/* ===== Scroll reveal (motion-safe only) ===== */
+@media (prefers-reduced-motion:no-preference){
+  .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s ease-out}
+  .js .reveal.in{opacity:1;transform:none}
+}
+
+/* ===== Responsive ===== */
+@media (max-width:980px){
+  .hero .wrap,.compare-wrap,.how .grid,.promise .grid,.final .card,.offer .grid{grid-template-columns:1fr}
+  .compare-wrap .sec-head{position:static;margin-bottom:28px}
+  .hero-media{order:-1}
+  .offer-card{left:14px;bottom:-26px}
+  .hero{padding-top:20px}
+  .hero-media{margin-bottom:26px}
+  .trust ul{grid-template-columns:1fr 1fr}
+  .trust li:nth-child(odd){border-left:0;padding-left:0}
+  .trust li:nth-child(n+3){border-top:1px solid var(--line)}
+  .rev-grid{grid-template-columns:1fr}
+  .offer img{min-height:260px;max-height:340px}
+  .final img{max-height:320px}
+  .promise-media{max-width:480px}
+  .badge{right:8px}
+  .how img{max-width:520px}
+}
+@media (max-width:700px){
+  body{font-size:17.5px;padding-bottom:88px}
+  .promo .long{display:none}.promo .short{display:inline}
+  .top .wrap{min-height:64px}
+  .logo img{height:32px}
+  .top-call{display:none}
+  .top-actions .btn-find{display:none}
+  .top-actions .btn-call-m{display:inline-flex}
+  .hero h1{font-size:33px}
+  .cta-row .btn-lg{width:100%}
+  .offer-card{position:relative;left:0;bottom:0;max-width:none;margin-top:-34px;margin-inline:14px}
+  .hero-media{margin-bottom:0}
+  .trust ul{grid-template-columns:1fr}
+  .trust li{border-left:0!important;padding-left:0!important;padding-block:18px}
+  .trust li+li{border-top:1px solid var(--line)}
+  .rev{flex-direction:row}
+  .rev img{width:96px}
+  .rev .b{padding:16px 16px 16px 0}
+  .rev blockquote{font-size:16.5px}
+  table.compare{font-size:16px}
+  .compare th,.compare td{padding:15px 14px}
+  .steps li{padding-left:56px}
+  .steps li::before{font-size:34px;width:42px}
+  .steps li:not(:last-child)::after{left:14px}
+  .cs-form-row{grid-template-columns:1fr;gap:0}
+  .cs-form-head,.cs-form-body{padding-left:20px;padding-right:20px}
+  .cs-form-head{padding-right:68px}
+  .mbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(39,69,83,.12)}
+  .mbar .btn{flex:1;min-height:52px;padding:0 12px;font-size:16px}
+  .mbar .btn-primary{flex:1.35}
+}
+.btn-call-m{display:none}
+
+/* ===== Scroll lists (breed collections + popular breeds) ===== */
+.rail{background:var(--grey)}
+.rail.alt{background:#fff}
+.rail .sec-head{margin-bottom:26px}
+.rail-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.rail-btns{display:flex;gap:10px;flex:none;padding-bottom:34px}
+.rail-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--slate);background:#fff;color:var(--slate);cursor:pointer;display:grid;place-items:center;transition:background-color .18s ease-out,color .18s ease-out,opacity .18s ease-out}
+.rail-btn:hover:not(:disabled){background:var(--slate);color:#fff}
+.rail-btn:disabled{opacity:.35;cursor:default}
+.track{list-style:none;margin:0;padding:4px 2px 10px;display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+@media (prefers-reduced-motion:no-preference){.track{scroll-behavior:smooth}}
+.track li{flex:0 0 calc((100% - 80px)/5);min-width:190px;scroll-snap-align:start}
+.rail.breeds .track li{flex-basis:calc((100% - 100px)/6);min-width:168px}
+.tile{display:block;height:100%;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:var(--slate);transition:transform .2s ease-out,box-shadow .2s ease-out,border-color .2s ease-out}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue)}
+.tile img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--grey)}
+.rail.breeds .tile img{aspect-ratio:3/4}
+.tile span{display:block;padding:14px 12px;text-align:center;font:600 15.5px/1.3 var(--head)}
+.dots{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.dots button{width:14px;height:14px;padding:0;border-radius:50%;border:0;background:#a9bcc7;cursor:pointer;position:relative}
+.dots button::after{content:"";position:absolute;inset:-15px}
+.dots button[aria-current="true"]{background:var(--orange);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--orange)}
+@media (max-width:700px){
+  .track li,.rail.breeds .track li{flex-basis:62%;min-width:0}
+  .rail-btns{display:none}
+  .rail-top{display:block}
+}
+@media (prefers-reduced-motion:reduce){.tile,.tile:hover{transition:none;transform:none}}
 </style>
 
-<style>
-	main { max-width: 960px; margin: 0 auto; padding: 96px 16px; }
-	.hero { text-align: center; margin-bottom: 72px; }
-	h1 { font-size: 2.5rem; font-weight: 700; margin: 0 0 16px; }
-	.hero p { font-size: 1.125rem; margin: 0 0 32px; }
-	.cta {
-		display: inline-flex; align-items: center; gap: 8px;
-		padding: 14px 28px; background: var(--accent); color: #fff;
-		border-radius: 8px; text-decoration: none; font-weight: 600;
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
-	}
-	.cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgb(0 0 0 / 0.2); }
-	.cta :global(svg) { transition: transform 0.2s ease; }
-	.cta:hover :global(svg) { transform: translateX(4px); }
-	.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-	.card {
-		padding: 24px; border: 1px solid #e5e5e5; border-radius: 12px;
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
-	}
-	.card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgb(0 0 0 / 0.1); }
-	.card h2 { font-size: 1.125rem; font-weight: 600; margin: 12px 0 8px; }
-	.card p { margin: 0; line-height: 1.5; }
-	@media (prefers-reduced-motion: reduce) {
-		* { transition: none !important; }
-	}
-</style>
+<script is:inline>
+/* Tracking hooks: every CTA carries a data-track value (e.g. hero_find_puppy, mbar_concierge).
+   Wire these to Meta Pixel / GA4 / Google Ads events in production. Not implemented yet. */
+(function(){
+  document.documentElement.classList.add('js');
+
+  // Concierge dialog
+  var dlg=document.getElementById('concierge'), lastBtn=null;
+  document.querySelectorAll('[data-open-form]').forEach(function(b){
+    b.addEventListener('click',function(){
+      lastBtn=b;
+      if(dlg.showModal){dlg.showModal();}else{dlg.setAttribute('open','');}
+      document.body.style.overflow='hidden';
+    });
+  });
+  function closeDlg(){ if(dlg.close){dlg.close();}else{dlg.removeAttribute('open');} }
+  dlg.addEventListener('close',function(){ document.body.style.overflow=''; if(lastBtn){lastBtn.focus();} });
+  dlg.querySelectorAll('[data-close-form]').forEach(function(b){b.addEventListener('click',closeDlg);});
+  dlg.addEventListener('click',function(e){ if(e.target===dlg){closeDlg();} }); // click on backdrop
+
+  // Mock form validation + success state
+  var form=document.getElementById('contactForm');
+  var rules={
+    FirstName:function(v){return v.trim().length>=2;},
+    LastName:function(v){return v.trim().length>=2;},
+    EmailAddress:function(v){return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.trim());},
+    PhoneNumber:function(v){return v.replace(/\D/g,'').length>=10;},
+    Message:function(v){return v.trim().length>=10;}
+  };
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var firstBad=null;
+    Object.keys(rules).forEach(function(n){
+      var el=form.elements[n], ok=rules[n](el.value);
+      el.setAttribute('aria-invalid',ok?'false':'true');
+      if(!ok && !firstBad){firstBad=el;}
+    });
+    if(firstBad){firstBad.focus();return;}
+    document.getElementById('dvContact').classList.add('is-sent');
+    dlg.querySelector('.thanks').focus();
+  });
+  form.addEventListener('input',function(e){ if(e.target.getAttribute('aria-invalid')==='true' && rules[e.target.name] && rules[e.target.name](e.target.value)){e.target.setAttribute('aria-invalid','false');} });
+
+  // Reveal on scroll (CSS only animates when the user has not asked for reduced motion)
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);} });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    els.forEach(function(el){io.observe(el);});
+  }else{ els.forEach(function(el){el.classList.add('in');}); }
+
+  // Scroll lists: prev/next buttons, page dots, edge-aware disabled state
+  document.querySelectorAll('[data-rail]').forEach(function(rail){
+    var track=rail.querySelector('.track'), dots=rail.querySelector('.dots');
+    var prev=rail.querySelector('[data-prev]'), next=rail.querySelector('[data-next]');
+    var pages=1;
+    function build(){
+      pages=Math.max(1,Math.round(track.scrollWidth/track.clientWidth));
+      dots.innerHTML='';
+      if(pages<2){dots.hidden=true;return;}
+      dots.hidden=false;
+      for(var i=0;i<pages;i++){
+        (function(i){
+          var d=document.createElement('button');
+          d.type='button'; d.setAttribute('aria-label','Go to page '+(i+1));
+          d.addEventListener('click',function(){
+            track.scrollTo({left:(track.scrollWidth-track.clientWidth)*(i/(pages-1))});
+          });
+          dots.appendChild(d);
+        })(i);
+      }
+      dots.removeAttribute('aria-hidden');
+      update();
+    }
+    function update(){
+      var max=track.scrollWidth-track.clientWidth;
+      var i=max>0?Math.round(track.scrollLeft/max*(pages-1)):0;
+      Array.prototype.forEach.call(dots.children,function(d,n){ if(n===i){d.setAttribute('aria-current','true');}else{d.removeAttribute('aria-current');} });
+      if(prev){prev.disabled=track.scrollLeft<=2;}
+      if(next){next.disabled=track.scrollLeft>=max-2;}
+    }
+    function step(dir){ track.scrollBy({left:dir*track.clientWidth*.85}); }
+    if(prev){prev.addEventListener('click',function(){step(-1);});}
+    if(next){next.addEventListener('click',function(){step(1);});}
+    track.addEventListener('scroll',function(){window.requestAnimationFrame(update);},{passive:true});
+    window.addEventListener('resize',build);
+    build();
+  });
+})();
+</script>
+</body>
+</html>
