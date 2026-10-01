@@ -2,6 +2,7 @@
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
+import '@fontsource/caveat/700.css';
 import '@fontsource-variable/montserrat/index.css';
 import {
 	Phone, ShieldCheck, HeartPulse, Truck, MessageCircle, Check, X, ArrowRight, Star, ChevronLeft, ChevronRight,
@@ -70,7 +71,7 @@ const pledges = [
 
 const faq = [
 	{ q: 'How do I know a breeder is legitimate?', a: 'Every breeder on Pawrade is background checked and verified before they can list a puppy. That is the difference between a vetted marketplace and an anonymous classified ad.' },
-	{ q: 'How does pickup and delivery work?', a: 'You can pick your puppy up or have them delivered, wherever you live. Your Puppy Concierge walks you through the options, the timing and what to expect on Gotcha day, and we do everything we can to make the trip a calm, stress-free one for your puppy.' },
+	{ q: 'Do you offer financing?', a: 'Yes. Flexible financing is available through our lending partner, so you can bring your puppy home now and pay over time. Terms vary by state and lender approval, and a Puppy Specialist can walk you through your options.' },
 	{ q: 'Is my payment protected?', a: 'Yes. Pawrade offers protected payments, and we do not work with puppy mills.' },
 	{ q: 'Can you deliver my puppy?', a: 'Safe pickup or delivery is available wherever you live. A concierge will walk you through the options for your location.' },
 	{ q: 'How does the $200 offer work?', a: 'For a limited time, you take $200 off the advertised price of any puppy.', link: { href: '#offer-terms', text: 'See the offer terms' } },
@@ -142,13 +143,13 @@ const schema = {
   </div>
   <div class="wrap hero-grid">
     <div class="hero-head">
-      <h1 id="h1">Find a Healthy Puppy from a <em>Verified Breeder.</em> No Scams. No Puppy Mills.</h1>
+      <h1 id="h1">Find a Healthy Puppy from a <em>Verified Breeder.</em> <span class="hand">No Scams. No Puppy Mills.</span></h1>
     </div>
     <div class="hero-rest">
 
       <div class="cta-row">
         <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="hero_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
-        <button class="link-btn" type="button" data-open-form data-track="hero_concierge">Talk to a Puppy Concierge</button>
+        <button class="link-btn" type="button" data-open-form data-track="hero_concierge">Connect with a Puppy Specialist</button>
       </div>
 
       <div class="proof">
@@ -224,19 +225,6 @@ const schema = {
   </div>
 </section>
 
-<!-- ================= OFFER ================= -->
-<section class="offer" id="offer" aria-labelledby="h2-offer">
-  <div class="grid">
-    <img src="/images/gsd-pumpkin.webp" width="1200" height="628" alt="A German Shepherd puppy resting on a pumpkin in fallen leaves" loading="lazy" decoding="async">
-    <div class="copy reveal">
-      <h2 id="h2-offer">Take $200 off the advertised price of any puppy</h2>
-      <p>The leaves are turning and the right puppy is out there. Browse available puppies and the savings come with your match.</p>
-      <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="offer_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
-      <p class="terms" id="offer-terms">Limited-time offer. Applies to the advertised price of any puppy. <a href="https://www.pawrade.com/" target="_blank" rel="noopener noreferrer">See full terms</a>.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ================= REVIEWS ================= -->
 <section class="reviews" aria-labelledby="h2-reviews">
   <div class="wrap">
@@ -264,6 +252,19 @@ const schema = {
   </div>
 </section>
 
+<!-- ================= OFFER ================= -->
+<section class="offer" id="offer" aria-labelledby="h2-offer">
+  <div class="grid">
+    <img src="/images/gsd-pumpkin.webp" width="1200" height="628" alt="A German Shepherd puppy resting on a pumpkin in fallen leaves" loading="lazy" decoding="async">
+    <div class="copy reveal">
+      <h2 id="h2-offer">Take $200 off the advertised price of any puppy</h2>
+      <p>The leaves are turning and the right puppy is out there. Browse available puppies and the savings come with your match.</p>
+      <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="offer_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
+      <p class="terms" id="offer-terms">Limited-time offer. Applies to the advertised price of any puppy. <a href="https://www.pawrade.com/" target="_blank" rel="noopener noreferrer">See full terms</a>.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ================= HOW IT WORKS ================= -->
 <section class="how" aria-labelledby="h2-how">
   <div class="wrap grid">
@@ -277,7 +278,7 @@ const schema = {
       </ol>
       <div class="cta-row">
         <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="how_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
-        <button class="link-btn" type="button" data-open-form data-track="how_concierge">Talk to a Puppy Concierge</button>
+        <button class="link-btn" type="button" data-open-form data-track="how_concierge">Connect with a Puppy Specialist</button>
       </div>
     </div>
   </div>
@@ -325,7 +326,7 @@ const schema = {
         <p>Browse vet-checked puppies from verified breeders, and save $200 for a limited time.</p>
         <div class="cta-row">
           <a class="btn btn-dark btn-lg" href={PUPPIES} data-track="final_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
-          <button class="link-btn" type="button" data-open-form data-track="final_concierge">Talk to a Puppy Concierge</button>
+          <button class="link-btn" type="button" data-open-form data-track="final_concierge">Connect with a Puppy Specialist</button>
         </div>
         <p class="phone-line">Or call <a href="tel:8887298812" data-track="final_call">{PHONE}</a>, daily 9AM–11PM EST</p>
       </div>
@@ -361,7 +362,7 @@ const schema = {
 <dialog id="concierge" aria-labelledby="cs-title">
   <div class="cs-form-card cs-form">
     <div class="cs-form-head">
-      <div class="cs-form-head-title" id="cs-title">Talk to a Puppy Concierge</div>
+      <div class="cs-form-head-title" id="cs-title">Connect with a Puppy Specialist</div>
       <p class="cs-sub">We read every message, daily 9AM–11PM EST.</p>
       <button class="cs-close" type="button" aria-label="Close form" data-close-form><X class="i" aria-hidden="true" /></button>
     </div>
@@ -512,6 +513,7 @@ header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px so
 /* progressive blur: strongest under the copy, fading out toward the subject */
 .hero-media::before{content:"";position:absolute;inset:0;z-index:1;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 22%,transparent 42%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 22%,transparent 42%)}
 .hero h1{color:#fff;font-size:clamp(34px,4.1vw,56px);font-weight:700;letter-spacing:-.022em;line-height:1.06;text-shadow:0 2px 24px rgba(39,50,61,.35)}
+.hero h1 .hand{display:block;margin-top:.1em;font-family:'Caveat','Segoe Script',cursive;font-weight:700;font-size:1.3em;line-height:1.05;letter-spacing:.01em;transform:rotate(-1.5deg);transform-origin:left center}
 .hero h1 em{font-style:normal;color:var(--blue);background:linear-gradient(transparent 84%,rgba(253,126,20,.7) 84%);padding-inline:2px}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:34px}
 .hero .cta-row{margin-top:28px}
@@ -602,7 +604,7 @@ table.compare{width:100%;border-collapse:separate;border-spacing:0;border-radius
 .promise{background:var(--slate);color:#fff}
 .promise .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center}
 .promise h2{color:#fff;font-size:clamp(28px,3.4vw,42px)}
-.pledges{margin-top:30px;border-top:3px solid var(--blue)}
+.pledges{margin-top:30px;border-top:1px solid rgba(255,255,255,.22)}
 .pledges article{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.22)}
 .pledges h3{color:#fff;font-size:20px;font-weight:600}
 .pledges p{margin-top:6px;color:#e2e8ed;font-size:17px}
@@ -712,6 +714,7 @@ textarea.cs-input{min-height:110px;resize:vertical}
   .top-actions .btn-find{display:none}
   .top-actions .btn-call-m{display:inline-flex}
   .hero h1{font-size:34px}
+  .hero h1 .hand{font-size:1.2em}
   .cta-row .btn-lg{width:100%}
   .hero-media{aspect-ratio:4/3}
   .hero-media img.bg{object-position:56% 22%}
