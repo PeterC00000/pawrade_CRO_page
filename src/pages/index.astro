@@ -1,0 +1,73 @@
+---
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import { PawPrint, ShieldCheck, HeartHandshake, ArrowRight } from '@lucide/astro';
+
+const features = [
+	{ icon: ShieldCheck, title: 'Trusted breeders', text: 'Every breeder is vetted before they list a puppy.' },
+	{ icon: HeartHandshake, title: 'Health guarantee', text: 'Your puppy comes with a written health guarantee.' },
+	{ icon: PawPrint, title: 'Perfect match', text: 'Find a puppy that fits your home and lifestyle.' },
+];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Find a healthy puppy from a trusted breeder with Pawrade." />
+		<title>Pawrade | Find Your Perfect Puppy</title>
+	</head>
+	<body>
+		<main>
+			<section class="hero">
+				<h1>Find Your Perfect Puppy</h1>
+				<p>Meet healthy puppies from trusted breeders, backed by Pawrade.</p>
+				<a class="cta" href="https://www.pawrade.com">
+					Browse Puppies <ArrowRight size={20} />
+				</a>
+			</section>
+			<section class="features">
+				{features.map(({ icon: Icon, title, text }) => (
+					<div class="card">
+						<Icon size={32} />
+						<h2>{title}</h2>
+						<p>{text}</p>
+					</div>
+				))}
+			</section>
+		</main>
+	</body>
+</html>
+
+<style is:global>
+	:root { --ink: #222; --bg: #fff; --accent: #222; }
+	body { margin: 0; font-family: 'Poppins', system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+</style>
+
+<style>
+	main { max-width: 960px; margin: 0 auto; padding: 96px 16px; }
+	.hero { text-align: center; margin-bottom: 72px; }
+	h1 { font-size: 2.5rem; font-weight: 700; margin: 0 0 16px; }
+	.hero p { font-size: 1.125rem; margin: 0 0 32px; }
+	.cta {
+		display: inline-flex; align-items: center; gap: 8px;
+		padding: 14px 28px; background: var(--accent); color: #fff;
+		border-radius: 8px; text-decoration: none; font-weight: 600;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+	.cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgb(0 0 0 / 0.2); }
+	.cta :global(svg) { transition: transform 0.2s ease; }
+	.cta:hover :global(svg) { transform: translateX(4px); }
+	.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+	.card {
+		padding: 24px; border: 1px solid #e5e5e5; border-radius: 12px;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+	.card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgb(0 0 0 / 0.1); }
+	.card h2 { font-size: 1.125rem; font-weight: 600; margin: 12px 0 8px; }
+	.card p { margin: 0; line-height: 1.5; }
+	@media (prefers-reduced-motion: reduce) {
+		* { transition: none !important; }
+	}
+</style>
