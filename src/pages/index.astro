@@ -79,7 +79,7 @@ const pledges = [
 
 const faq = [
 	{ q: 'How do I know a breeder is legitimate?', a: 'Every breeder on Pawrade is background checked and verified before they can list a puppy. That is the difference between a vetted marketplace and an anonymous classified ad.' },
-	{ q: 'What if my puppy gets sick?', a: 'Every puppy is vet-checked and vaccinated, and backed by the Pawrade Health Guarantee.', link: { href: 'https://www.pawrade.com/', text: 'Read the full guarantee', ext: true } },
+	{ q: 'How does pickup and delivery work?', a: 'You can pick your puppy up or have them delivered, wherever you live. Your Puppy Concierge walks you through the options, the timing and what to expect on Gotcha day, and we do everything we can to make the trip a calm, stress-free one for your puppy.' },
 	{ q: 'Is my payment protected?', a: 'Yes. Pawrade offers protected payments, and we do not work with puppy mills.' },
 	{ q: 'Can you deliver my puppy?', a: 'Safe pickup or delivery is available wherever you live. A concierge will walk you through the options for your location.' },
 	{ q: 'How does the $200 offer work?', a: 'For a limited time, you take $200 off the advertised price of any puppy.', link: { href: '#offer-terms', text: 'See the offer terms' } },
@@ -468,7 +468,7 @@ const schema = {
   --blue-dd:#00668d;     /* hover for the dark blue */
   --blue-l:#8fd8f5;      /* light tint for text on dark slate */
   --blue-tint:#e9f7fd;   /* pale wash of the brand blue for section backgrounds */
-  --on-blue:#1b2630;     /* text on #00a7e1 (5.3:1) */
+  --on-blue:#fff;        /* text on #00a7e1: white, per brand direction */
   --slate:#33414f;       /* required brand color, do not alter */
   --slate-d:#27323d;     /* deeper step of the same slate */
   --ink2:#3f4c59;        /* body copy */
@@ -517,7 +517,7 @@ svg.i{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-
 .link-btn:hover{color:var(--blue-dd)}
 
 /* ===== Promo bar + header ===== */
-.promo{background:var(--blue);color:var(--on-blue);font:500 15px/1.35 var(--head);text-align:center;padding:9px 16px}
+.promo{background:var(--blue);color:var(--on-blue);font:600 15px/1.35 var(--head);text-align:center;padding:9px 16px}
 .promo a{color:var(--on-blue);font-weight:600;text-underline-offset:3px;white-space:nowrap}
 .promo .long{display:inline}.promo .short{display:none}
 header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--blue)}
@@ -561,13 +561,13 @@ header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px so
 .offer-card .n{font-size:14px;color:rgba(255,255,255,.82);margin-top:6px;line-height:1.4}
 
 /* ===== Trust strip ===== */
-.trust{background:var(--blue);color:var(--on-blue)}
+.trust{background:var(--grey);border-block:1px solid var(--line)}
 .trust ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
-.trust li{display:flex;gap:14px;align-items:flex-start;padding:26px 22px;border-left:1px solid rgba(27,38,48,.2)}
+.trust li{display:flex;gap:14px;align-items:flex-start;padding:26px 22px;border-left:1px solid var(--line)}
 .trust li:first-child{border-left:0;padding-left:0}
-.trust svg.i{width:30px;height:30px;color:var(--on-blue);margin-top:2px;stroke-width:1.8}
+.trust svg.i{width:30px;height:30px;color:var(--blue-d);margin-top:2px;stroke-width:1.8}
 .trust strong{display:block;font:600 16.5px/1.25 var(--head)}
-.trust span{display:block;font-size:14.5px;line-height:1.4;font-weight:500;color:var(--on-blue);margin-top:4px}
+.trust span{display:block;font-size:14.5px;line-height:1.4;color:var(--muted);margin-top:4px}
 
 /* ===== Section scaffolding ===== */
 section{padding:clamp(52px,7vw,92px) 0}
@@ -727,7 +727,7 @@ textarea.cs-input{min-height:110px;resize:vertical}
   .hero-rest{order:3;padding:28px 0 clamp(40px,8vw,56px)}
   .trust ul{grid-template-columns:1fr 1fr}
   .trust li:nth-child(odd){border-left:0;padding-left:0}
-  .trust li:nth-child(n+3){border-top:1px solid rgba(27,38,48,.2)}
+  .trust li:nth-child(n+3){border-top:1px solid var(--line)}
   .rev-grid{grid-template-columns:1fr}
   .offer img{min-height:260px;max-height:340px}
   .final img{max-height:320px}
@@ -748,7 +748,7 @@ textarea.cs-input{min-height:110px;resize:vertical}
   .offer-card{left:14px;right:14px;bottom:14px;width:auto}
   .trust ul{grid-template-columns:1fr}
   .trust li{border-left:0!important;padding-left:0!important;padding-block:18px}
-  .trust li+li{border-top:1px solid rgba(27,38,48,.2)}
+  .trust li+li{border-top:1px solid var(--line)}
   .rev{flex-direction:row}
   .rev img{width:96px}
   .rev .b{padding:16px 16px 16px 0}
