@@ -132,7 +132,7 @@ const schema = {
     <div class="bg"></div>
     <div class="offer-card v-pmax">
       <div class="v">$200 off any puppy</div>
-      <button class="code" type="button" data-copy="FL200" data-track="promo_code_copy" aria-label="Promo code FL200, tap to copy">Promo code: <b>FL200</b><span class="copy-hint">Copy</span></button>
+      <div class="code">Promo code: <b>FL200</b></div>
       <div class="n">Off the advertised price. Limited time only.</div>
     </div>
   </div>
@@ -250,7 +250,6 @@ const schema = {
     <div class="copy reveal">
       <h2 id="h2-offer">Take $200 off the advertised price of any puppy</h2>
       <p>The leaves are turning and the right puppy is out there. Browse available puppies and the savings come with your match.</p>
-      <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="offer_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
       <p class="terms" id="offer-terms">Limited-time offer. Applies to the advertised price of any puppy. <a href="https://www.pawrade.com/" target="_blank" rel="noopener noreferrer">See full terms</a>.</p>
     </div>
   </div>
@@ -426,15 +425,6 @@ const schema = {
       rp.textContent=on?'Play':'Pause';
     });
   }
-
-  // Promo code chip: tap to copy
-  document.querySelectorAll('[data-copy]').forEach(function(b){
-    b.addEventListener('click',function(){
-      var code=b.getAttribute('data-copy'), hint=b.querySelector('.copy-hint');
-      function done(){ if(hint){hint.textContent='Copied!'; setTimeout(function(){hint.textContent='Copy';},1800);} }
-      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(done,function(){}); }
-    });
-  });
 
   // Reveal on scroll (CSS only animates when the user has not asked for reduced motion)
   var els=document.querySelectorAll('.reveal');

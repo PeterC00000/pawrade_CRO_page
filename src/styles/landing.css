@@ -120,12 +120,11 @@ table.compare{width:100%;border-collapse:separate;border-spacing:0;border-radius
 /* ===== Offer band ===== */
 .offer{padding:0;background:var(--slate);color:#fff}
 .offer .grid{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
-.offer img{width:100%;height:100%;object-fit:cover;min-height:340px}
-.offer .copy{padding:clamp(36px,5vw,72px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
-.offer h2{color:#fff;font-size:clamp(28px,3.4vw,44px)}
-.offer p{margin-top:16px;color:#e7ecf0;max-width:30em}
-.offer .btn{margin-top:28px}
-.offer .terms{margin-top:14px;font-size:14px;color:#c9d3db}
+.offer img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;min-height:0;max-height:300px}
+.offer .copy{padding:clamp(24px,3vw,40px) clamp(24px,5vw,72px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.offer h2{color:#fff;font-size:clamp(24px,2.8vw,34px)}
+.offer p{margin-top:12px;color:#e7ecf0;max-width:30em}
+.offer .terms{margin-top:10px;font-size:14px;color:#c9d3db}
 .offer .terms a{color:#fff}
 
 /* ===== Reviews ===== */
@@ -200,7 +199,7 @@ textarea.cs-input{min-height:110px;resize:vertical}
 @media (max-width:980px){
   .compare-wrap,.support-grid,.offer .grid{grid-template-columns:1fr}
   .compare-wrap .sec-head{position:static;margin-bottom:28px}
-  .offer img{min-height:260px;max-height:340px}
+  .offer img{min-height:0;max-height:200px}
 }
 @media (max-width:700px){
   body{font-size:17.5px;padding-bottom:88px}
@@ -337,10 +336,8 @@ footer .fine{border-top:0;padding-top:0}
 @media (max-width:700px){.rev-pause{display:none}}
 
 /* ===== Promo code chip in the hero offer card ===== */
-.offer-card .code{margin:10px 0 2px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.14);border:1px dashed rgba(255,255,255,.6);color:#fff;font:600 13px/1 var(--head);cursor:pointer;min-height:40px}
+.offer-card .code{margin:10px 0 2px;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.14);border:1px dashed rgba(255,255,255,.6);color:#fff;font:600 13px/1 var(--head);min-height:40px}
 .offer-card .code b{font-size:17px;letter-spacing:.08em}
-.offer-card .code .copy-hint{margin-left:4px;padding:3px 8px;border-radius:999px;background:var(--blue);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-.offer-card .code:hover{background:rgba(255,255,255,.22)}
 
 /* ===== Closing CTA (small) ===== */
 .closing{padding:clamp(28px,4vw,44px) 0;background:var(--blue-tint)}
