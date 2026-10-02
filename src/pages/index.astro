@@ -10,12 +10,11 @@ import { Phone, ShieldCheck, HeartPulse, Truck, MessageCircle, Check, X, ArrowRi
 const PUPPIES = 'https://www.pawrade.com/puppies'; // TODO: confirm the Available Puppies URL
 const PHONE = '(888) 729-8812';
 
-// Trust strip. Carries the Health Guarantee, No Puppy Mill Pledge and Safe Journey Home promises.
+// Value-proposition boxes. They carry the Health Guarantee, No Puppy Mill Pledge and Safe Journey Home promises.
 const trust = [
 	{ icon: ShieldCheck, title: 'Verified breeders', text: 'Background checked, with zero tolerance for puppy mills' },
 	{ icon: HeartPulse, title: 'Health guarantee', text: 'Vet-checked, vaccinated and backed by our guarantee' },
 	{ icon: Truck, title: 'Safe pickup or delivery', text: 'A calm, stress-free journey home, wherever you live' },
-	{ icon: MessageCircle, title: 'Puppy Specialist support', text: 'A real person, every step of the way' },
 ];
 
 const compare = [
@@ -126,6 +125,10 @@ const schema = {
 <header class="top">
   <div class="wrap">
     <div class="logo"><img src="/images/logo.webp" width="454" height="91" alt="Pawrade"></div>
+    <div class="rating" aria-label="Rated 5 out of 5 stars from over 26,000 reviews">
+      <span class="stars" aria-hidden="true">{[0,1,2,3,4].map(() => <Star />)}</span>
+      <span><b>26,000+</b> reviews</span>
+    </div>
     <div class="top-actions">
       <a class="top-call" href="tel:8887298812" data-track="header_call">
         <small>Talk to a real person, 9AM–11PM EST</small>
@@ -167,31 +170,26 @@ const schema = {
           <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">{[0,1,2,3,4].map(() => <Star />)}</span> Pawrade customer</figcaption>
         </figure>
       </div>
-
-      <div class="proof">
-        <a href="https://www.trustpilot.com/review/pawrade.com" target="_blank" rel="noopener noreferrer" data-track="proof_trustpilot">
-          <span class="stars" aria-hidden="true">{[0,1,2,3,4].map(() => <Star />)}</span>
-          <span class="t"><b>7,470</b> reviews on Trustpilot</span>
-        </a>
-        <a href="https://www.pawrade.com/reviews/" target="_blank" rel="noopener noreferrer" data-track="proof_site_reviews">
-          <span class="stars" aria-hidden="true">{[0,1,2,3,4].map(() => <Star />)}</span>
-          <span class="t"><b>18,917</b> reviews on Pawrade.com</span>
-        </a>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= TRUST STRIP ================= -->
-<div class="trust">
-  <div class="wrap">
-    <ul aria-label="Why families trust Pawrade">
-      {trust.map(({ icon: Icon, title, text }) => (
-        <li><Icon class="i" aria-hidden="true" /><div><strong>{title}</strong><span>{text}</span></div></li>
-      ))}
-    </ul>
+<!-- ================= PUPPY SPECIALIST SUPPORT + VALUE PROPS ================= -->
+<section class="support" aria-labelledby="h2-support">
+  <div class="wrap support-grid">
+    <img class="support-img reveal" src="/images/specialist-couple.webp" width="760" height="760" alt="A smiling couple with their new golden puppy" loading="lazy" decoding="async">
+    <div class="support-copy reveal">
+      <h2 id="h2-support">Puppy Specialist support</h2>
+      <p>A real person, every step of the way. Your Puppy Specialist answers your questions, matches you with a verified breeder and plans your pickup or delivery, daily 9AM–11PM EST.</p>
+      <ul class="vp" aria-label="Why families trust Pawrade">
+        {trust.map(({ icon: Icon, title, text }) => (
+          <li><Icon class="i" aria-hidden="true" /><strong>{title}</strong><span>{text}</span></li>
+        ))}
+      </ul>
+      <a class="text-link" href="#concierge" data-open-form data-track="support_concierge">Connect with a Puppy Specialist</a>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- ================= BREED PICKS (hidden unless ?breed=<slug> matches) ================= -->
 <section class="breed-pick" id="breed-pick" aria-labelledby="h2-breeds" hidden>
@@ -244,30 +242,33 @@ const schema = {
   </div>
 </section>
 
-<!-- ================= REVIEWS ================= -->
+<!-- ================= REVIEWS (single auto-scrolling row, no outbound links) ================= -->
 <section class="reviews" aria-labelledby="h2-reviews">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 id="h2-reviews">Over 26,000 reviews from families like yours</h2>
-      <div class="rev-tags">
-        <a href="https://www.trustpilot.com/review/pawrade.com" target="_blank" rel="noopener noreferrer"><b>7,470</b> on Trustpilot</a>
-        <a href="https://www.pawrade.com/reviews/" target="_blank" rel="noopener noreferrer"><b>18,917</b> on Pawrade.com</a>
+    <div class="rev-head">
+      <div class="sec-head reveal">
+        <h2 id="h2-reviews">Over 26,000 reviews from families like yours</h2>
       </div>
+      <button class="rev-pause" type="button" aria-pressed="false" data-rev-pause>Pause</button>
     </div>
-
-    <div class="rev-grid">
-      {reviews.map((r) => (
-        <article class="rev reveal">
-          <img src={`/images/${r.img}`} width={r.w} height={r.h} alt={r.alt} loading="lazy" decoding="async">
-          <div class="b">
-            <span class="stars" role="img" aria-label="5 out of 5 stars">{[0,1,2,3,4].map(() => <Star />)}</span>
-            <blockquote>“{r.quote}”</blockquote>
-            <cite><b>{r.pup}</b> with {r.who}</cite>
-          </div>
-        </article>
+  </div>
+  <div class="rev-marquee" data-marquee role="region" aria-label="Customer reviews" tabindex="0">
+    <div class="rev-track">
+      {[false, true].map((dup) => (
+        <div class="rev-group" aria-hidden={dup ? 'true' : undefined}>
+          {reviews.map((r) => (
+            <article class="rev">
+              <img src={`/images/${r.img}`} width={r.w} height={r.h} alt={dup ? '' : r.alt} loading="lazy" decoding="async">
+              <div class="b">
+                <span class="stars" role="img" aria-label="5 out of 5 stars">{[0,1,2,3,4].map(() => <Star />)}</span>
+                <blockquote>“{r.quote}”</blockquote>
+                <cite><b>{r.pup}</b> with {r.who}</cite>
+              </div>
+            </article>
+          ))}
+        </div>
       ))}
     </div>
-    <p class="read-more"><a href="https://www.pawrade.com/reviews/" target="_blank" rel="noopener noreferrer" data-track="reviews_read_more">Read more reviews</a></p>
   </div>
 </section>
 
@@ -302,23 +303,6 @@ const schema = {
           <div class="ans">{a}{link && <> <a href={link.href} {...(link.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.text}</a>.</>}</div>
         </details>
       ))}
-    </div>
-  </div>
-</section>
-
-<!-- ================= FINAL CTA ================= -->
-<section class="final" aria-labelledby="h2-final">
-  <div class="wrap">
-    <div class="card reveal">
-      <div class="copy">
-        <h2 id="h2-final">Your perfect puppy is waiting</h2>
-        <p>Browse vet-checked puppies from verified breeders, and save $200 for a limited time.</p>
-        <div class="cta-stack">
-          <a class="btn btn-dark btn-lg" href={PUPPIES} data-track="final_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
-          <a class="text-link" href="#concierge" data-open-form data-track="final_concierge">Connect with a Puppy Specialist</a>
-        </div>
-      </div>
-      <img src="/images/corgi.webp" width="1200" height="628" alt="A little girl in a red jacket hugging a corgi puppy on a log" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -471,6 +455,16 @@ const schema = {
       picked.forEach(function(c){c.hidden=false;list.appendChild(c);});
       bp.hidden=false;
     }
+  }
+
+  // Reviews marquee: pause/play toggle (also pauses on hover/focus via CSS)
+  var rp=document.querySelector('[data-rev-pause]'), mq=document.querySelector('[data-marquee]');
+  if(rp&&mq){
+    rp.addEventListener('click',function(){
+      var on=mq.classList.toggle('paused');
+      rp.setAttribute('aria-pressed',on?'true':'false');
+      rp.textContent=on?'Play':'Pause';
+    });
   }
 
   // Reveal on scroll (CSS only animates when the user has not asked for reduced motion)
