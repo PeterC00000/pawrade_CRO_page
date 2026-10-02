@@ -1,0 +1,64 @@
+---
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource-variable/montserrat/index.css';
+import '../styles/landing.css';
+import { Check, ArrowRight } from '@lucide/astro';
+
+const PUPPIES = 'https://www.pawrade.com/puppies'; // TODO: confirm the Available Puppies URL
+const PHONE = '(888) 729-8812';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thank You | Pawrade</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#007dab">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body class="thanks-page">
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo"><img src="/images/logo.webp" width="454" height="91" alt="Pawrade"></div>
+  </div>
+</header>
+
+<main class="thanks-main" id="main-content">
+  <div class="wrap">
+    <div class="thanks-card">
+      <div class="tick"><Check aria-hidden="true" /></div>
+      <h1>Thank you, your message is in.</h1>
+      <p>A Puppy Specialist will reply soon. We read every message, daily 9AM–11PM EST.</p>
+      <ol class="next" aria-label="What happens next">
+        <li><b>1</b><span>We read your message and match it to puppies from our verified breeders.</span></li>
+        <li><b>2</b><span>A Puppy Specialist reaches out by email or phone.</span></li>
+        <li><b>3</b><span>You choose your puppy, and we plan a safe pickup or delivery.</span></li>
+      </ol>
+      <a class="btn btn-primary btn-lg" href={PUPPIES} data-track="thanks_find_puppy">Browse available puppies <ArrowRight class="i" aria-hidden="true" /></a>
+      <p class="call">If it's urgent, call <a href="tel:8887298812" data-track="thanks_call">{PHONE}</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <ul>
+      <li><a href="https://www.pawrade.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+      <li><a href="https://www.pawrade.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+    </ul>
+    <p class="fine">© 2026 Pawrade.</p>
+  </div>
+</footer>
+
+<script is:inline>
+/* Conversion hook: fire the lead event here (Meta Lead / GA4 generate_lead / Google Ads conversion).
+   The hero variant that produced the lead is in ?v=meta|pmax. */
+(function(){ window.PAWRADE_VARIANT = new URLSearchParams(location.search).get('v') || 'pmax'; })();
+</script>
+</body>
+</html>

@@ -41,3 +41,12 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Pawrade landing page: URL parameters
+
+| Parameter | Values | Effect |
+|---|---|---|
+| `?v=` | `pmax` (default), `meta` | Hero variant. `pmax` = trust + $200 offer card. `meta` = emotional headline + family photo. |
+| `?breed=` | a breed slug, e.g. `french-bulldog`, `beagle` | Shows 4-6 breed cards (requested breed first, then top sellers). Hidden when absent or unmatched. |
+
+Form submit redirects to `/thanks` (carrying `?v=`). The form is front-end only for now. Every CTA carries a `data-track` attribute for Pixel / GA4 / Google Ads hooks.
