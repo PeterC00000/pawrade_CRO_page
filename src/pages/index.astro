@@ -60,6 +60,8 @@ const slides = [
 	<div class="slides" id="slides" tabindex="0" aria-label="Slides. Swipe or use the arrow keys.">
 		{slides.map((s, i) => (
 			<section class="slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`} data-slide={i} style={`--lpx:${s.land.px};--lpy:${s.land.py};--ppx:${s.port.px};--ppy:${s.port.py}`}>
+				<div class="edge edge-l" aria-hidden="true" style={`background-image:url(/images/slides/s${i + 1}-edge-l.webp)`}></div>
+				<div class="edge edge-r" aria-hidden="true" style={`background-image:url(/images/slides/s${i + 1}-edge-r.webp)`}></div>
 				<picture>
 					<source media="(orientation: portrait)" srcset={`/images/slides/s${i + 1}-port-720.webp 720w, /images/slides/s${i + 1}-port-1080.webp 1080w`} sizes="100vw">
 					<img
@@ -134,11 +136,24 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-text-size
 .bg{display:block;width:100%;height:100%;object-fit:cover;object-position:calc(var(--lpx) * 100%) calc(var(--lpy) * 100%);user-select:none;-webkit-user-drag:none}
 @media (orientation:portrait){.bg{object-position:calc(var(--ppx) * 100%) calc(var(--ppy) * 100%)}}
 
+/* Landscape screens wider than 16:9 (most desktops): show the whole artwork, centered both ways,
+   and extend its left/right edge colors to fill the side space. Nothing (logo, headline, button) is cropped. */
+.edge{display:none;position:absolute;top:0;bottom:0;background-size:100% 100%;background-repeat:no-repeat;filter:blur(8px);transform:scale(1.04)}
+.edge-l{left:0;right:50%}
+.edge-r{left:50%;right:0}
+@media (orientation:landscape) and (min-aspect-ratio:16/9){
+  .edge{display:block}
+  .bg{object-fit:contain;object-position:50% 50%}
+}
+
 /* hotspot layer: the artwork's box after "cover", so percentages match the baked-in button/arrow */
 .hit{position:absolute;display:none;--vh:100vh;--fw:max(100vw, calc(var(--vh) * var(--A)));--fh:max(var(--vh), calc(100vw / var(--A)));width:var(--fw);height:var(--fh);left:calc((100vw - var(--fw)) * var(--px));top:calc((var(--vh) - var(--fh)) * var(--py));pointer-events:none}
 @supports (height:100dvh){.hit{--vh:100dvh}}
 .hit-land{display:block}
 @media (orientation:portrait){.hit-land{display:none}.hit-port{display:block}}
+@media (orientation:landscape) and (min-aspect-ratio:16/9){
+  .hit-land{--fw:calc(var(--vh) * var(--A));--fh:var(--vh);left:calc((100vw - var(--fw)) / 2);top:0}
+}
 .hs{position:absolute;display:block;border:0;padding:0;margin:0;background:transparent;cursor:pointer;border-radius:999px;pointer-events:auto;-webkit-tap-highlight-color:rgba(255,255,255,.25)}
 .hs::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .hs-round{border-radius:50%}
