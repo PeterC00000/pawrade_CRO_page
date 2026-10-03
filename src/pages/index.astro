@@ -1,32 +1,43 @@
 ---
 // Pawrade slide carousel (prototype branch). Three full-viewport, swipeable slides.
-// The slide artwork has its text baked in, so each slide is shown whole ("contain") over a blurred
-// copy of itself. On a 16:9 screen it fills the viewport edge to edge.
-// Hotspots sit on the baked-in button and arrows (percent of the 1920x1080 artwork) to make them work.
+// Each slide has a landscape and a portrait artwork; the browser picks by orientation and the
+// image always covers the whole screen (object-fit: cover). Hotspots sit on the artwork's button
+// and arrow. Their positions are percentages of the artwork, mapped through the same cover maths.
 const CONTACT = 'https://www.pawrade.com/contact/'; // TODO: confirm the contact URL
 
+// px/py = object-position (0 to 1) used when the artwork has to be cropped to the screen shape.
 const slides = [
 	{
 		alt: 'A woman laughing as she hugs a fluffy white Pomeranian puppy. Headline: Checked for health. Raised for happiness. Browse puppies from reputable breeders and verified listings.',
-		hotspots: [
-			{ kind: 'cta', x: 3.8, y: 81.5, w: 30, h: 10.2, label: 'Contact Pawrade' },
-			{ kind: 'next', x: 86, y: 79.8, w: 7.6, h: 13.5, label: 'Next slide' },
-		],
+		land: { px: 0, py: 0.55, hotspots: [
+			{ kind: 'cta', x: 3.75, y: 81.4, w: 30, h: 10, label: 'Contact Pawrade' },
+			{ kind: 'next', x: 90.4, y: 83.5, w: 8, h: 13, label: 'Next slide' },
+		] },
+		port: { px: 0.5, py: 0.5, hotspots: [
+			{ kind: 'cta', x: 17.8, y: 80.6, w: 64.4, h: 7.2, label: 'Contact Pawrade' },
+			{ kind: 'next', x: 44.5, y: 90, w: 11, h: 7, label: 'Next slide' },
+		] },
 	},
 	{
 		alt: 'A father and child walking hand in hand with a small white dog on a mountain trail. Headline: It’s easy to choose a Pawrade puppy. With full protection from scams and puppy mills, finding the perfect puppy is a click away.',
-		hotspots: [
-			{ kind: 'cta', x: 35, y: 65.3, w: 30, h: 10, label: 'Contact Pawrade' },
-			{ kind: 'prev', x: 6.4, y: 79.8, w: 7.6, h: 13.5, label: 'Previous slide' },
-			{ kind: 'next', x: 86, y: 79.8, w: 7.6, h: 13.5, label: 'Next slide' },
-		],
+		land: { px: 0.5, py: 0.55, hotspots: [
+			{ kind: 'cta', x: 35, y: 81.4, w: 30, h: 10, label: 'Contact Pawrade' },
+			{ kind: 'next', x: 90.4, y: 83.5, w: 8, h: 13, label: 'Next slide' },
+		] },
+		port: { px: 0.5, py: 0.5, hotspots: [
+			{ kind: 'cta', x: 17.8, y: 80.6, w: 64.4, h: 7.2, label: 'Contact Pawrade' },
+			{ kind: 'next', x: 44.5, y: 90, w: 11, h: 7, label: 'Next slide' },
+		] },
 	},
 	{
 		alt: 'A couple kissing a small brown poodle puppy between them. Headline: Where reputation meets adorable. With over 25,000+ reviews, our process to bring puppy love into your home is tried and true.',
-		hotspots: [
-			{ kind: 'cta', x: 62.4, y: 81.5, w: 30, h: 10.2, label: 'Contact Pawrade' },
-			{ kind: 'prev', x: 6.4, y: 79.8, w: 7.6, h: 13.5, label: 'Previous slide' },
-		],
+		land: { px: 1, py: 0.55, hotspots: [
+			{ kind: 'cta', x: 62.3, y: 81.4, w: 30, h: 10, label: 'Contact Pawrade' },
+		] },
+		port: { px: 0.5, py: 0.5, hotspots: [
+			{ kind: 'cta', x: 17.8, y: 80.6, w: 64.4, h: 7.2, label: 'Contact Pawrade' },
+			{ kind: 'next', x: 44.5, y: 90, w: 11, h: 7, label: 'Back to the first slide' },
+		] },
 	},
 ];
 ---
@@ -40,35 +51,40 @@ const slides = [
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#274553">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="/images/slides/slide-1-960.webp" type="image/webp" media="(max-width: 960px)">
-<link rel="preload" as="image" href="/images/slides/slide-1-1920.webp" type="image/webp" media="(min-width: 961px)">
+<link rel="preload" as="image" type="image/webp" media="(orientation: portrait)" imagesrcset="/images/slides/s1-port-720.webp 720w, /images/slides/s1-port-1080.webp 1080w" imagesizes="100vw">
+<link rel="preload" as="image" type="image/webp" media="(orientation: landscape)" imagesrcset="/images/slides/s1-land-1280.webp 1280w, /images/slides/s1-land-1920.webp 1920w" imagesizes="100vw">
 </head>
 <body>
 
 <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Pawrade">
 	<div class="slides" id="slides" tabindex="0" aria-label="Slides. Swipe or use the arrow keys.">
 		{slides.map((s, i) => (
-			<section class="slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`} data-slide={i}>
-				<img class="fill" src={`/images/slides/slide-${i + 1}-960.webp`} alt="" aria-hidden="true" decoding="async" loading={i === 0 ? 'eager' : 'lazy'}>
-				<div class="frame">
+			<section class="slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`} data-slide={i} style={`--lpx:${s.land.px};--lpy:${s.land.py};--ppx:${s.port.px};--ppy:${s.port.py}`}>
+				<picture>
+					<source media="(orientation: portrait)" srcset={`/images/slides/s${i + 1}-port-720.webp 720w, /images/slides/s${i + 1}-port-1080.webp 1080w`} sizes="100vw">
 					<img
-						class="art"
-						src={`/images/slides/slide-${i + 1}-1920.webp`}
-						srcset={`/images/slides/slide-${i + 1}-960.webp 960w, /images/slides/slide-${i + 1}-1920.webp 1920w`}
-						sizes="min(100vw, 177.78vh)"
-						width="1920" height="1080"
+						class="bg"
+						src={`/images/slides/s${i + 1}-land-1920.webp`}
+						srcset={`/images/slides/s${i + 1}-land-1280.webp 1280w, /images/slides/s${i + 1}-land-1920.webp 1920w`}
+						sizes="100vw"
 						alt={s.alt}
 						decoding="async"
 						loading={i === 0 ? 'eager' : 'lazy'}
 						fetchpriority={i === 0 ? 'high' : 'auto'}
 						draggable="false"
 					>
-					{s.hotspots.map((h) => (
-						h.kind === 'cta'
-							? <a class="hs" href={CONTACT} aria-label={h.label} data-track={`slide${i + 1}_contact`} style={`left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`}></a>
-							: <button class="hs hs-round" type="button" aria-label={h.label} data-go={h.kind} style={`left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`}></button>
-					))}
-				</div>
+				</picture>
+
+				{[['land', 16 / 9, 'l'], ['port', 9 / 16, 'p']].map(([o, A, k]) => (
+					<div class={`hit hit-${o}`} style={`--A:${A.toFixed(4)};--px:var(--${k}px);--py:var(--${k}py)`}>
+						{s[o].hotspots.map((h) => {
+							const pos = `left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`;
+							return h.kind === 'cta'
+								? <a class="hs" href={CONTACT} aria-label={h.label} data-track={`slide${i + 1}_contact_${o}`} style={pos}></a>
+								: <button class="hs hs-round" type="button" aria-label={h.label} data-go={i === slides.length - 1 ? 'first' : 'next'} data-track={`slide${i + 1}_next_${o}`} style={pos}></button>;
+						})}
+					</div>
+				))}
 			</section>
 		))}
 	</div>
@@ -80,9 +96,8 @@ const slides = [
 <script is:inline>
 (function(){
   var box=document.getElementById('slides');
-  var slides=[].slice.call(box.querySelectorAll('.slide'));
   var dots=[].slice.call(document.querySelectorAll('[data-dot]'));
-  var n=slides.length;
+  var n=dots.length;
   function index(){ return Math.max(0,Math.min(n-1,Math.round(box.scrollLeft/box.clientWidth))); }
   function go(i){ i=Math.max(0,Math.min(n-1,i)); box.scrollTo({left:i*box.clientWidth,behavior:'smooth'}); }
   function paint(){
@@ -92,7 +107,7 @@ const slides = [
   box.addEventListener('scroll',function(){ window.requestAnimationFrame(paint); },{passive:true});
   dots.forEach(function(d,k){ d.addEventListener('click',function(){ go(k); }); });
   document.querySelectorAll('[data-go]').forEach(function(b){
-    b.addEventListener('click',function(){ go(index()+(b.getAttribute('data-go')==='next'?1:-1)); });
+    b.addEventListener('click',function(){ go(b.getAttribute('data-go')==='first'?0:index()+1); });
   });
   document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight'){ go(index()+1); }
@@ -113,25 +128,26 @@ body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-text-size
 @media (prefers-reduced-motion:no-preference){.slides{scroll-behavior:smooth}}
 .slides:focus-visible{outline:3px solid #00a7e1;outline-offset:-3px}
 
-/* every slide is exactly the viewport */
-.slide{position:relative;flex:0 0 100vw;width:100vw;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;display:grid;place-items:center;background:#1b2630}
+/* every slide is exactly the viewport, and its artwork covers all of it */
+.slide{position:relative;flex:0 0 100vw;width:100vw;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:#1b2630;--lpx:.5;--lpy:.5;--ppx:.5;--ppy:.5}
+.slide picture{position:absolute;inset:0;display:block}
+.bg{display:block;width:100%;height:100%;object-fit:cover;object-position:calc(var(--lpx) * 100%) calc(var(--lpy) * 100%);user-select:none;-webkit-user-drag:none}
+@media (orientation:portrait){.bg{object-position:calc(var(--ppx) * 100%) calc(var(--ppy) * 100%)}}
 
-/* blurred copy fills any letterbox space */
-.slide .fill{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(26px) brightness(.72) saturate(1.1);transform:scale(1.05);pointer-events:none;user-select:none}
-
-/* the artwork: largest 16:9 box that fits the viewport */
-.frame{position:relative;width:min(100vw,calc(100vh * 16 / 9));width:min(100vw,calc(100dvh * 16 / 9));aspect-ratio:16/9}
-.art{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
-
-/* clickable zones over the artwork's button and arrows (each has a 44px minimum tap area) */
-.hs{position:absolute;display:block;border:0;padding:0;margin:0;background:transparent;cursor:pointer;border-radius:999px;-webkit-tap-highlight-color:rgba(255,255,255,.25)}
+/* hotspot layer: the artwork's box after "cover", so percentages match the baked-in button/arrow */
+.hit{position:absolute;display:none;--vh:100vh;--fw:max(100vw, calc(var(--vh) * var(--A)));--fh:max(var(--vh), calc(100vw / var(--A)));width:var(--fw);height:var(--fh);left:calc((100vw - var(--fw)) * var(--px));top:calc((var(--vh) - var(--fh)) * var(--py));pointer-events:none}
+@supports (height:100dvh){.hit{--vh:100dvh}}
+.hit-land{display:block}
+@media (orientation:portrait){.hit-land{display:none}.hit-port{display:block}}
+.hs{position:absolute;display:block;border:0;padding:0;margin:0;background:transparent;cursor:pointer;border-radius:999px;pointer-events:auto;-webkit-tap-highlight-color:rgba(255,255,255,.25)}
 .hs::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .hs-round{border-radius:50%}
 .hs:focus-visible{outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 6px #00a7e1}
 
-.dots{position:absolute;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:10px;padding:8px 12px;border-radius:999px;background:rgba(27,38,48,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* slide dots: vertical, mid-right, clear of the artwork's headline, button and arrow */
+.dots{position:absolute;right:max(10px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;padding:12px 8px;border-radius:999px;background:rgba(27,38,48,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .dots button{position:relative;width:10px;height:10px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:background-color .2s,transform .2s}
-.dots button::after{content:"";position:absolute;inset:-17px}
+.dots button::after{content:"";position:absolute;inset:-17px -12px}
 .dots button[aria-selected="true"]{background:#fff;transform:scale(1.25)}
 @media (prefers-reduced-motion:reduce){.dots button{transition:none}}
 </style>
