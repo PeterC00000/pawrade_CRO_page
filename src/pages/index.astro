@@ -212,8 +212,6 @@ const schema = {
       <a class="btn btn-outline btn-lg" href={PUPPIES} data-track="found_view_puppies">View Available Puppies <ArrowRight class="i" aria-hidden="true" /></a>
     </div>
     <div class="collage reveal">
-      <span class="blk blk1" aria-hidden="true"></span>
-      <span class="blk blk2" aria-hidden="true"></span>
       {reviews.map((r, i) => (
         <>
           <figure class={`ph ph${i + 1}`}><img src={r.photo} width="640" height={r.ph} alt={r.alt} loading="lazy" decoding="async"></figure>

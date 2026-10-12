@@ -344,9 +344,6 @@ body{font-family:var(--body)}
 .found-copy .btn{margin-top:26px}
 .collage{position:relative;height:clamp(640px,54vw,790px)}
 .collage>*{position:absolute}
-.blk{background:var(--blue);border-radius:6px}
-.blk1{left:2%;top:34%;width:42%;height:22%;transform:rotate(-6deg);z-index:0}
-.blk2{left:60%;top:76%;width:38%;height:20%;transform:rotate(5deg);z-index:0}
 .ph{margin:0;background:#fff;padding:7px 7px 7px;border-radius:4px;box-shadow:0 14px 34px rgba(20,28,36,.28);z-index:2}
 .ph img{width:100%;height:100%;object-fit:cover;border-radius:2px}
 .ph1{left:0;top:0;width:33%;height:46%;transform:rotate(-3deg)}
@@ -364,7 +361,6 @@ body{font-family:var(--body)}
   .found-grid{grid-template-columns:1fr}
   .collage{height:auto;display:flex;flex-direction:column;padding:6px 4px 20px}
   .collage>*{position:relative;left:auto;top:auto;width:auto;height:auto}
-  .blk{display:none}
   .ph{width:min(62%,320px);aspect-ratio:1/1;padding:6px}
   .ph1{aspect-ratio:4/5;order:1;align-self:flex-start;transform:rotate(-3deg)}
   .rc1{order:2;margin:-44px 0 0 12%;transform:rotate(1.5deg)}
