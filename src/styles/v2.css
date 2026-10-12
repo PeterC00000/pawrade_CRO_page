@@ -323,7 +323,6 @@ body{font-family:var(--body)}
 .nums li{border-top:2px solid rgba(255,255,255,.6);padding-top:18px}
 .nums .n{display:block;font:800 clamp(34px,4vw,50px)/1 var(--head);color:#fff}
 .nums p{margin-top:10px;font-size:17px;line-height:1.5;color:#fff}
-.zero .btn{margin-top:clamp(26px,3.5vw,44px)}
 @media (max-width:760px){.nums{grid-template-columns:1fr}.nums li{display:grid;grid-template-columns:64px 1fr;gap:0 8px;align-items:start}.nums .n{grid-row:1/3}}
 
 /* ----- Daily Concierge Support: split panel + photo (idea: 7) ----- */
