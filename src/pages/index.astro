@@ -47,7 +47,7 @@ const breeds = [
 // Real customer reviews (from the Demand Gen assets). Quotes are the customers' own words.
 const reviews = [
 	{ photo: '/images/cust-stacy.webp', ph: 880, alt: 'Stacy and her husband holding their new Bichon Frise puppy', pup: 'Bichon Frise puppy', quote: 'From start to finish, they were professional, communicative, and genuinely caring. My puppy arrived happy, healthy, and right on time\u2014clearly cared for every step of the way.', who: 'Stacy M., Westford, MA' },
-	{ photo: '/images/cust-malinda.webp', ph: 640, alt: 'Malinda holding her new Mini Dachshund puppy', pup: 'Dachshund, Mini puppy', quote: 'The Pawrade team is incredible! They made the task of purchasing my pup a breeze. They offer financing and even travel plans for pups who might be across state lines!', who: 'Malinda C., Franklin, GA' },
+	{ photo: '/images/cust-malinda.webp', ph: 640, alt: 'Malinda holding her new Mini Dachshund puppy', pup: 'Mini Dachshund puppy', quote: 'The Pawrade team is incredible! They made the task of purchasing my pup a breeze. They offer financing and even travel plans for pups who might be across state lines!', who: 'Malinda C., Franklin, GA' },
 	{ photo: '/images/cust-michael.webp', ph: 640, alt: 'Michael holding his new Cavalier King Charles Spaniel puppy', pup: 'Cavalier King Charles Spaniel puppy', quote: 'He is adorable!!! Just precious!!! My family immediately fell in love with him and with his playful and gentle nature and energetic interactions!!!', who: 'Michael P., Mesquite, TX' },
 ];
 
@@ -307,17 +307,6 @@ const schema = {
               <input autocomplete="tel" class="cs-input required phone" id="PhoneNumber" name="PhoneNumber" placeholder="(555) 555-0123" type="tel" required>
               <span class="err">Please enter a valid phone number.</span>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="csTopicSelect">What's this about?</label>
-            <select class="cs-input" id="csTopicSelect" name="Topic">
-              <option value="Looking for a puppy" selected>Looking for a puppy</option>
-              <option value="I've reserved a puppy">I've reserved a puppy</option>
-              <option value="Travel day question">Travel day question</option>
-              <option value="Health or guarantee">Health or guarantee</option>
-              <option value="I'm a breeder">I'm a breeder</option>
-              <option value="Something else">Something else</option>
-            </select>
           </div>
           <div class="form-group">
             <label for="csMessage">Message</label>
