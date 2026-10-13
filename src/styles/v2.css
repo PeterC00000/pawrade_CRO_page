@@ -428,3 +428,23 @@ body{font-family:var(--body)}
 /* ----- hero: single white CTA ----- */
 .hero-cta{color:var(--slate);margin-top:22px}
 .hero-cta:hover{background:var(--blue-tint)}
+
+/* ===== Stacked hero (phones/tablets): headline, then the CTAs, then a taller photo with the quote tucked at the bottom ===== */
+@media (max-width:1100px){
+  .hero{padding:0}
+  .hero-rest{order:2;padding:4px 0 26px}
+  .hero-media{order:3}
+}
+@media (max-width:700px){
+  .hero-media{aspect-ratio:6/7;max-height:none}
+  .hero-media .bg{background-position:50% 20%}
+  html[data-v="meta"] .hero-media .bg{background-position:60% 20%}
+  .quote-card{left:12px;right:12px;bottom:12px;top:auto;width:auto;padding:11px 14px}
+  /* family photo (?v=meta): show the whole photo and let the quote sit on a blue band beneath it, so nobody is covered */
+  html[data-v="meta"] .hero-media{aspect-ratio:auto;height:calc(100vw * 575 / 706 + 148px);background:var(--blue)}
+  html[data-v="meta"] .hero-media .bg{inset:0 0 auto 0;height:calc(100vw * 575 / 706);background-size:100% 100%;background-position:0 0}
+  html[data-v="meta"] .quote-card{top:auto;bottom:12px}
+  .quote-card .stars svg{width:14px;height:14px}
+  .quote-card blockquote{margin-top:6px;font-size:13px;line-height:1.4}
+  .quote-card figcaption{margin-top:6px;font-size:12px}
+}
