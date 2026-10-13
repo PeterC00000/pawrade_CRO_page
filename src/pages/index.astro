@@ -20,15 +20,15 @@ const delivery = [
 // sizes and may overlap the map; lines point from each circle to its area.
 const MAP = { x0: 60, y0: 110, w: 880, h: 480 };           // map box inside the 1000x700 stage
 const pins = [
-	{ city: 'Seattle area', img: 'pup-sheltie', alt: 'An Australian Shepherd puppy in the snow', x: 14.5, y: 9, cx: 95, cy: 112, r: 46 },
-	{ city: 'Boise area', img: 'pup-pomsky', alt: 'A Pomsky puppy', x: 21, y: 26, cx: 215, cy: 58, r: 36 },
-	{ city: 'Denver area', img: 'pup-goldendoodle', alt: 'A merle Mini Goldendoodle puppy', x: 35, y: 44, cx: 425, cy: 192, r: 62 },
-	{ city: 'Des Moines area', img: 'pup-cavapoo', alt: 'A Cavapoo puppy in a blue bandana', x: 54, y: 38, cx: 548, cy: 112, r: 50 },
-	{ city: 'Chicago area', img: 'pup-poodle', alt: 'A Mini Poodle puppy', x: 61.5, y: 34, cx: 695, cy: 92, r: 42 },
-	{ city: 'Upstate New York', img: 'pup-yorkie', alt: 'A Yorkshire Terrier puppy', x: 79, y: 27, cx: 868, cy: 100, r: 54 },
-	{ city: 'Phoenix area', img: 'pup-chihuahua', alt: 'A tiny Chihuahua puppy held in a hand', x: 24.5, y: 66, cx: 168, cy: 524, r: 58 },
-	{ city: 'Houston area', img: 'pup-shihtzu', alt: 'A Shih Tzu puppy', x: 51, y: 79, cx: 420, cy: 606, r: 64 },
-	{ city: 'Miami area', img: 'pup-frenchie', alt: 'A blue French Bulldog puppy wearing pearls', x: 79, y: 91, cx: 705, cy: 604, r: 46 },
+	{ city: 'Seattle area', img: 'pup-sheltie', alt: 'An Australian Shepherd puppy in the snow', x: 14.5, y: 9, cx: 95, cy: 120, r: 69 },
+	{ city: 'Boise area', img: 'pup-pomsky', alt: 'A Pomsky puppy', x: 21, y: 26, cx: 250, cy: 60, r: 54 },
+	{ city: 'Denver area', img: 'pup-goldendoodle', alt: 'A merle Mini Goldendoodle puppy', x: 35, y: 44, cx: 430, cy: 200, r: 93 },
+	{ city: 'Des Moines area', img: 'pup-cavapoo', alt: 'A Cavapoo puppy in a blue bandana', x: 54, y: 38, cx: 580, cy: 110, r: 75 },
+	{ city: 'Chicago area', img: 'pup-poodle', alt: 'A Mini Poodle puppy', x: 61.5, y: 34, cx: 725, cy: 95, r: 63 },
+	{ city: 'Upstate New York', img: 'pup-yorkie', alt: 'A Yorkshire Terrier puppy', x: 79, y: 27, cx: 880, cy: 150, r: 81 },
+	{ city: 'Phoenix area', img: 'pup-chihuahua', alt: 'A tiny Chihuahua puppy held in a hand', x: 24.5, y: 66, cx: 160, cy: 520, r: 87 },
+	{ city: 'Houston area', img: 'pup-shihtzu', alt: 'A Shih Tzu puppy', x: 51, y: 79, cx: 410, cy: 598, r: 96 },
+	{ city: 'Miami area', img: 'pup-frenchie', alt: 'A blue French Bulldog puppy wearing pearls', x: 79, y: 91, cx: 690, cy: 615, r: 69 },
 ].map((p) => {
 	const tx = MAP.x0 + (MAP.w * p.x) / 100, ty = MAP.y0 + (MAP.h * p.y) / 100;
 	const d = Math.hypot(tx - p.cx, ty - p.cy);
@@ -215,7 +215,6 @@ const schema = {
         {pins.map((p) => (
           <figure class="pinw" style={`left:${((p.cx - p.r) / 10).toFixed(2)}%;top:${((p.cy - p.r) / 7).toFixed(2)}%;width:${(p.r * 2 / 10).toFixed(2)}%`}>
             <img class="pin" src={`/images/${p.img}.webp`} width="240" height="240" alt={`${p.alt}, ${p.city}`} loading="lazy" decoding="async">
-            <figcaption>{p.city}</figcaption>
           </figure>
         ))}
       </div>
