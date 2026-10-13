@@ -12,27 +12,27 @@ const PHONE = '(888) 729-8812';
 // Delivery options. Descriptions are plain-language placeholders: confirm the wording with the transport team.
 const delivery = [
 	{ icon: MapPin, title: 'Local Pickup', text: 'Meet your breeder and bring your puppy home yourself.' },
-	{ icon: Plane, title: 'Generic Air Travel', text: 'Your puppy flies to an airport near you.' },
+	{ icon: Plane, title: 'Air Travel', text: 'Your puppy flies to an airport near you.' },
 	{ icon: Truck, title: 'Pampered Ground Delivery', text: 'Door-to-door ground delivery with extra care along the way.' },
 ];
 
-// Map pins. x/y = position on the map image (percent). Circles sit around the map; lines point to the area.
+// Map pins. x/y = position on the map image (percent). Circles (cx, cy, r in stage units) have different
+// sizes and may overlap the map; lines point from each circle to its area.
 const MAP = { x0: 60, y0: 110, w: 880, h: 480 };           // map box inside the 1000x700 stage
-const R = 47;                                              // circle radius (stage units)
 const pins = [
-	{ city: 'Seattle area', img: 'pup-sheltie', alt: 'An Australian Shepherd puppy in the snow', x: 14.5, y: 9, cx: 120, cy: 56 },
-	{ city: 'Boise area', img: 'pup-pomsky', alt: 'A Pomsky puppy', x: 21, y: 26, cx: 255, cy: 56 },
-	{ city: 'Denver area', img: 'pup-goldendoodle', alt: 'A merle Mini Goldendoodle puppy', x: 35, y: 44, cx: 390, cy: 56 },
-	{ city: 'Des Moines area', img: 'pup-cavapoo', alt: 'A Cavapoo puppy in a blue bandana', x: 54, y: 38, cx: 525, cy: 56 },
-	{ city: 'Chicago area', img: 'pup-poodle', alt: 'A Mini Poodle puppy', x: 61.5, y: 34, cx: 660, cy: 56 },
-	{ city: 'Upstate New York', img: 'pup-yorkie', alt: 'A Yorkshire Terrier puppy', x: 79, y: 27, cx: 835, cy: 56 },
-	{ city: 'Phoenix area', img: 'pup-chihuahua', alt: 'A tiny Chihuahua puppy held in a hand', x: 24.5, y: 66, cx: 230, cy: 648 },
-	{ city: 'Houston area', img: 'pup-shihtzu', alt: 'A Shih Tzu puppy', x: 51, y: 79, cx: 500, cy: 648 },
-	{ city: 'Miami area', img: 'pup-frenchie', alt: 'A blue French Bulldog puppy wearing pearls', x: 79, y: 91, cx: 775, cy: 648 },
+	{ city: 'Seattle area', img: 'pup-sheltie', alt: 'An Australian Shepherd puppy in the snow', x: 14.5, y: 9, cx: 95, cy: 112, r: 46 },
+	{ city: 'Boise area', img: 'pup-pomsky', alt: 'A Pomsky puppy', x: 21, y: 26, cx: 215, cy: 58, r: 36 },
+	{ city: 'Denver area', img: 'pup-goldendoodle', alt: 'A merle Mini Goldendoodle puppy', x: 35, y: 44, cx: 425, cy: 192, r: 62 },
+	{ city: 'Des Moines area', img: 'pup-cavapoo', alt: 'A Cavapoo puppy in a blue bandana', x: 54, y: 38, cx: 548, cy: 112, r: 50 },
+	{ city: 'Chicago area', img: 'pup-poodle', alt: 'A Mini Poodle puppy', x: 61.5, y: 34, cx: 695, cy: 92, r: 42 },
+	{ city: 'Upstate New York', img: 'pup-yorkie', alt: 'A Yorkshire Terrier puppy', x: 79, y: 27, cx: 868, cy: 100, r: 54 },
+	{ city: 'Phoenix area', img: 'pup-chihuahua', alt: 'A tiny Chihuahua puppy held in a hand', x: 24.5, y: 66, cx: 168, cy: 524, r: 58 },
+	{ city: 'Houston area', img: 'pup-shihtzu', alt: 'A Shih Tzu puppy', x: 51, y: 79, cx: 420, cy: 606, r: 64 },
+	{ city: 'Miami area', img: 'pup-frenchie', alt: 'A blue French Bulldog puppy wearing pearls', x: 79, y: 91, cx: 705, cy: 604, r: 46 },
 ].map((p) => {
 	const tx = MAP.x0 + (MAP.w * p.x) / 100, ty = MAP.y0 + (MAP.h * p.y) / 100;
 	const d = Math.hypot(tx - p.cx, ty - p.cy);
-	return { ...p, tx, ty, sx: p.cx + ((tx - p.cx) / d) * R, sy: p.cy + ((ty - p.cy) / d) * R };
+	return { ...p, tx, ty, sx: p.cx + ((tx - p.cx) / d) * p.r, sy: p.cy + ((ty - p.cy) / d) * p.r };
 });
 
 const compare = [
@@ -164,14 +164,7 @@ const schema = {
     <div class="hero-rest">
       <div class="hero-actions">
         <div class="cta-stack">
-          <form class="hero-search" id="hero-search" data-base={PUPPIES} data-track="hero_search">
-            <label class="sr-only" for="breed-select">Choose a breed</label>
-            <select id="breed-select" name="breed">
-              <option value="">View all puppies</option>
-              {breeds.map((b) => <option value={b.slug}>{b.name}</option>)}
-            </select>
-            <button class="btn btn-primary btn-lg" type="submit" data-track="hero_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></button>
-          </form>
+          <a class="btn btn-white btn-lg hero-cta" href={PUPPIES} data-track="hero_find_puppy">Find My Puppy <ArrowRight class="i" aria-hidden="true" /></a>
           <a class="text-link" href="#concierge" data-open-form data-track="hero_concierge">Connect with a Puppy Specialist</a>
         </div>
       </div>
@@ -220,7 +213,10 @@ const schema = {
           {pins.map((p) => <circle cx={p.tx.toFixed(1)} cy={p.ty.toFixed(1)} r="5" />)}
         </svg>
         {pins.map((p) => (
-          <img class="pin" src={`/images/${p.img}.webp`} width="240" height="240" alt={`${p.alt}, ${p.city}`} title={p.city} loading="lazy" decoding="async" style={`left:${((p.cx - R) / 10).toFixed(2)}%;top:${((p.cy - R) / 7).toFixed(2)}%;width:${(R * 2 / 10).toFixed(2)}%`}>
+          <figure class="pinw" style={`left:${((p.cx - p.r) / 10).toFixed(2)}%;top:${((p.cy - p.r) / 7).toFixed(2)}%;width:${(p.r * 2 / 10).toFixed(2)}%`}>
+            <img class="pin" src={`/images/${p.img}.webp`} width="240" height="240" alt={`${p.alt}, ${p.city}`} loading="lazy" decoding="async">
+            <figcaption>{p.city}</figcaption>
+          </figure>
         ))}
       </div>
     </div>
@@ -254,7 +250,6 @@ const schema = {
 <!-- ================= OFFER ================= -->
 <section class="offer" id="offer" aria-labelledby="h2-offer">
   <div class="grid">
-    <img src="/images/gsd-pumpkin.webp" width="1200" height="628" alt="A German Shepherd puppy resting on a pumpkin in fallen leaves" loading="lazy" decoding="async">
     <div class="copy reveal">
       <h2 id="h2-offer">Take $200 off the advertised price of any puppy</h2>
       <p>The leaves are turning and the right puppy is out there. Browse available puppies and the savings come with your match.</p>
@@ -411,16 +406,6 @@ const schema = {
       picked.forEach(function(c){c.hidden=false;list.appendChild(c);});
       bp.hidden=false;
     }
-  }
-
-  // Hero breed picker: go to the puppies page, filtered when a breed is chosen
-  var hs=document.getElementById('hero-search');
-  if(hs){
-    hs.addEventListener('submit',function(e){
-      e.preventDefault();
-      var v=hs.elements['breed'].value;
-      window.location.assign(hs.getAttribute('data-base')+(v?('?breed='+encodeURIComponent(v)):''));
-    });
   }
 
   // Reveal on scroll (CSS only animates when the user has not asked for reduced motion)

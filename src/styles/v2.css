@@ -304,16 +304,7 @@ body{font-family:var(--body)}
 
 /* ----- Hero: breed picker + CTA (idea: 4a) ----- */
 .hero .sub{margin-top:18px;max-width:30em;font-size:clamp(17px,1.4vw,19px);color:rgba(255,255,255,.92);text-shadow:0 1px 14px rgba(39,50,61,.5)}
-.hero-search{display:flex;align-items:center;gap:6px;width:min(560px,100%);margin-top:26px;padding:6px;border-radius:999px;background:#fff;box-shadow:0 12px 32px rgba(20,28,36,.3)}
-.hero-search select{flex:1;min-width:0;height:52px;padding:0 44px 0 22px;border:0;border-radius:999px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2333414f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 18px center;-webkit-appearance:none;appearance:none;font:600 16px/1 var(--body);color:var(--slate);cursor:pointer}
-.hero-search select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.hero-search .btn{flex:none;min-height:52px;padding:0 26px}
 .hero-actions{margin-top:0}
-@media (max-width:560px){
-  .hero-search{flex-direction:column;align-items:stretch;border-radius:26px}
-  .hero-search select{height:54px;border:1px solid #d9d9d9}
-  .hero-search .btn{width:100%}
-}
 
 /* ----- They found theirs on Pawrade: overlaid collage of customer photos + blue review cards ----- */
 .found{background:#fff;padding:clamp(48px,6vw,88px) 0;overflow:hidden}
@@ -364,7 +355,6 @@ body{font-family:var(--body)}
 @media (max-width:520px){.bubble{display:none}}
 .hero{padding:clamp(28px,3.6vw,48px) 0}
 .hero .sub{margin-top:12px}
-.hero-search{margin-top:20px}
 .pullquote blockquote{font-size:16px}
 
 /* ----- Hero quote card (replaces the $200 box) ----- */
@@ -388,7 +378,6 @@ body{font-family:var(--body)}
   .hero .sub{margin-inline:auto;text-shadow:none}
   .hero-actions{justify-content:center}
   .cta-stack{align-items:center;width:100%}
-  .hero-search{margin-inline:auto}
 }
 @media (max-width:1100px){
   .hero-media::after{display:none}
@@ -397,7 +386,6 @@ body{font-family:var(--body)}
   .hero .sub{margin-inline:auto;text-shadow:none}
   .hero-actions{justify-content:center}
   .cta-stack{align-items:center;width:100%}
-  .hero-search{margin-inline:auto}
 }
 
 /* ===== Delivery options + US map ===== */
@@ -409,8 +397,8 @@ body{font-family:var(--body)}
 
 /* ===== Delivery section: German Shepherd photo background + US map with puppy pins ===== */
 .deliv{position:relative;isolation:isolate;overflow:hidden;color:#fff;padding:clamp(56px,7vw,112px) 0}
-.deliv::before{content:"";position:absolute;inset:0;z-index:-2;background:url(/images/gsd-pumpkin.webp) 50% 40%/cover no-repeat}
-.deliv::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(39,50,61,.9) 0%,rgba(39,50,61,.78) 45%,rgba(39,50,61,.55) 100%)}
+.deliv::before{content:"";position:absolute;inset:0;z-index:-2;background:url(/images/shihtzu-breeder.webp) 50% 40%/cover no-repeat}
+.deliv::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(39,50,61,.92) 0%,rgba(39,50,61,.8) 48%,rgba(39,50,61,.62) 100%)}
 .deliv-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,4vw,64px);align-items:center}
 .deliv-copy h2{color:#fff;font-size:clamp(28px,3.6vw,46px)}
 .deliv-copy h2::after{content:"";display:block;width:56px;height:5px;border-radius:3px;background:var(--blue);margin-top:16px}
@@ -420,6 +408,25 @@ body{font-family:var(--body)}
 .usmap{position:absolute;left:6%;top:15.714%;width:88%;height:auto}
 .uslines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .uslines line{stroke:#33414f;stroke-width:2px;vector-effect:non-scaling-stroke}
-.uslines circle{fill:#33414f}
-.pin{position:absolute;aspect-ratio:1;border-radius:50%;object-fit:cover;border:2px solid #33414f;background:#fff;box-shadow:0 6px 16px rgba(20,28,36,.25)}
 @media (max-width:1000px){.deliv-grid{grid-template-columns:1fr}.deliv::after{background:rgba(39,50,61,.84)}}
+
+/* ----- map pins: different sizes, white ring + 2px slate frame, city tags ----- */
+.uslines circle{fill:#fd7e14;stroke:#33414f;stroke-width:2px;vector-effect:non-scaling-stroke}
+.pinw{position:absolute;margin:0;z-index:2}
+.pin{display:block;width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;border:3px solid #fff;outline:2px solid #33414f;outline-offset:0;background:#fff;box-shadow:0 8px 20px rgba(20,28,36,.3)}
+.pinw figcaption{position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);white-space:nowrap;padding:3px 9px;border-radius:999px;background:#33414f;color:#fff;font:700 clamp(8px,.85vw,11px)/1.2 var(--body)}
+@media (max-width:640px){.pinw figcaption{display:none}}
+
+/* ----- $200 offer: German Shepherd (leaves) photo as the section background ----- */
+.offer{position:relative;isolation:isolate;overflow:hidden;background:var(--slate);color:#fff;padding:clamp(64px,8vw,128px) 0;min-height:clamp(360px,34vw,520px);display:flex;align-items:center}
+.offer::before{content:"";position:absolute;inset:0;z-index:-2;background:url(/images/gsd-pumpkin.webp) 50% 45%/cover no-repeat}
+.offer::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(39,50,61,.9) 0%,rgba(39,50,61,.72) 55%,rgba(39,50,61,.45) 100%)}
+.offer .grid{display:block;width:100%}
+.offer .copy{padding:0;max-width:640px;margin-left:clamp(20px,5vw,96px)}
+.offer h2{font-size:clamp(28px,3.8vw,48px)}
+.offer p{max-width:34em}
+@media (max-width:1000px){.offer::after{background:rgba(39,50,61,.8)}.offer .copy{margin-inline:20px}}
+
+/* ----- hero: single white CTA ----- */
+.hero-cta{color:var(--slate);margin-top:22px}
+.hero-cta:hover{background:var(--blue-tint)}
