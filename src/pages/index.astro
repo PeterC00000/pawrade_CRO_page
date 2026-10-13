@@ -407,6 +407,18 @@ const schema = {
     }
   }
 
+  // Mobile sticky bar: hidden at first, slides up once the hero CTA has scrolled above the viewport
+  var mbar=document.querySelector('.mbar'), heroCta=document.querySelector('.hero-cta');
+  if(mbar){
+    var checkBar=function(){
+      var past=heroCta ? heroCta.getBoundingClientRect().bottom<0 : window.scrollY>300;
+      mbar.classList.toggle('show',past);
+    };
+    window.addEventListener('scroll',checkBar,{passive:true});
+    window.addEventListener('resize',checkBar);
+    checkBar();
+  }
+
   // Reveal on scroll (CSS only animates when the user has not asked for reduced motion)
   var els=document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){

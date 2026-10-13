@@ -448,3 +448,12 @@ body{font-family:var(--body)}
   .quote-card blockquote{margin-top:6px;font-size:13px;line-height:1.4}
   .quote-card figcaption{margin-top:6px;font-size:12px}
 }
+
+/* ===== Mobile sticky bar: starts off-screen, slides up once the hero CTA has scrolled out of view ===== */
+@media (max-width:700px){
+  .js .mbar{transform:translateY(110%);visibility:hidden;transition:transform .38s cubic-bezier(.22,.8,.3,1),visibility 0s linear .38s}
+  .js .mbar.show{transform:none;visibility:visible;transition:transform .38s cubic-bezier(.22,.8,.3,1),visibility 0s}
+}
+@media (max-width:700px) and (prefers-reduced-motion:reduce){
+  .js .mbar,.js .mbar.show{transition:none}
+}
