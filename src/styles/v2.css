@@ -396,3 +396,42 @@ body{font-family:var(--body)}
 .quote-card blockquote{margin:10px 0 0;font:500 15.5px/1.5 var(--body);color:#fff}
 .quote-card figcaption{margin-top:10px;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.9)}
 @media (max-width:700px){.quote-card{padding:14px 16px}.quote-card blockquote{font-size:14px}}
+
+/* ===== Hero redesign (idea: slide 7): blue panel + photo ===== */
+.hero h1 .hand{display:block;margin-top:.12em;font-family:'Caveat','Segoe Script',cursive;font-weight:700;font-size:1.32em;line-height:1.05;letter-spacing:.01em}
+.hero h1 em{color:#fff;background:linear-gradient(transparent 84%,var(--orange) 84%)}
+.hero{background:var(--blue)}
+@media (min-width:1101px){
+  .hero{display:block;min-height:0;padding:0}
+  .hero-media{inset:0 0 0 auto;width:50%;z-index:0}
+  .hero-media::before,.hero-media::after{display:none}
+  .hero-grid{display:block;width:50%;margin:0;padding:clamp(36px,4.2vw,68px) clamp(24px,4vw,72px);text-align:center;position:relative;z-index:2}
+  .hero-head,.hero-rest{max-width:640px;margin-inline:auto}
+  .hero h1{text-shadow:none}
+  .hero .sub{margin-inline:auto;text-shadow:none}
+  .hero-actions{justify-content:center}
+  .cta-stack{align-items:center;width:100%}
+  .hero-search{margin-inline:auto}
+}
+@media (max-width:1100px){
+  .hero-media::after{display:none}
+  .hero-head,.hero-rest{text-align:center}
+  .hero h1{text-shadow:none}
+  .hero .sub{margin-inline:auto;text-shadow:none}
+  .hero-actions{justify-content:center}
+  .cta-stack{align-items:center;width:100%}
+  .hero-search{margin-inline:auto}
+}
+
+/* ===== Delivery options + US map ===== */
+.opts{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:14px}
+.opts li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:14px 16px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(255,255,255,.06)}
+.opts svg.i{width:28px;height:28px;color:var(--blue);margin-top:2px}
+.opts strong{display:block;font:800 17px/1.25 var(--head);color:#fff}
+.opts span{display:block;margin-top:2px;font-size:15px;line-height:1.45;color:#fff}
+.split-map{position:relative;background:#fff;display:grid;place-items:center;padding:clamp(24px,4vw,56px);min-height:360px}
+.split-map .map{position:static;width:100%;height:auto;object-fit:contain;opacity:.95}
+.split-map .pin{position:absolute;right:clamp(16px,4vw,56px);bottom:clamp(16px,4vw,48px);margin:0;width:min(46%,300px);padding:7px;background:#fff;border-radius:4px;box-shadow:0 16px 36px rgba(20,28,36,.3);transform:rotate(3deg)}
+.split-map .pin img{width:100%;height:auto;border-radius:2px}
+@media (max-width:860px){.split-map{order:-1;min-height:0;padding:20px 20px 56px}.split-map .pin{width:42%}}
+.split{padding:0}

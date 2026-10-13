@@ -1,9 +1,10 @@
 ---
 import '@fontsource/open-sans/700.css';
 import '@fontsource/open-sans/800.css';
+import '@fontsource/caveat/700.css'; // cursive row in the H1 (requested; not one of the two brand fonts)
 import '@fontsource-variable/montserrat/index.css';
 import '../styles/v2.css';
-import { Phone, Check, X, ArrowRight, Star, MessageCircle } from '@lucide/astro';
+import { Phone, Check, X, ArrowRight, Star, MessageCircle, MapPin, Plane, Truck } from '@lucide/astro';
 
 const PUPPIES = 'https://www.pawrade.com/puppies'; // TODO: confirm the Available Puppies URL
 const PHONE = '(888) 729-8812';
@@ -13,6 +14,13 @@ const steps = [
 	'Only hand-selected breeders are approved on Pawrade.com.',
 	'We back every puppy with our Health Guarantee and safe reservation process.',
 	'Easy pickup & transportation options to get your puppy home, wherever you live.',
+];
+
+// Delivery options. Descriptions are plain-language placeholders: confirm the wording with the transport team.
+const delivery = [
+	{ icon: MapPin, title: 'Local Pickup', text: 'Meet your breeder and bring your puppy home yourself.' },
+	{ icon: Plane, title: 'Generic Air Travel', text: 'Your puppy flies to an airport near you.' },
+	{ icon: Truck, title: 'Pampered Ground Delivery', text: 'Door-to-door ground delivery with extra care along the way.' },
 ];
 
 const compare = [
@@ -67,12 +75,12 @@ const schema = {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Find a Healthy Puppy from a Verified Breeder | Pawrade</title>
-<meta name="description" content="Find a healthy puppy from a verified breeder. Zero scams, zero puppy mills. Health guarantee, safe delivery and daily concierge support. Save $200 for a limited time.">
+<meta name="description" content="Find a healthy puppy from a verified breeder. Zero scams, zero puppy mills. Health guarantee and safe delivery from breeders across the US. Save $200 for a limited time.">
 <!-- PROTOTYPE: remove the robots tag below before launch if this page should be indexed. Most paid landing pages stay noindex. -->
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Find a Healthy Puppy from a Verified Breeder | Pawrade">
-<meta property="og:description" content="Zero scams. Zero puppy mills. Verified breeders, a health guarantee and daily concierge support. $200 off any puppy for a limited time.">
+<meta property="og:description" content="Zero scams. Zero puppy mills. Verified breeders, a health guarantee and safe delivery across the US. $200 off any puppy for a limited time.">
 <meta property="og:image" content="/images/hero-family.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#00a7e1">
@@ -136,8 +144,8 @@ const schema = {
   <div class="wrap hero-grid">
     <div class="hero-head">
       <h1 id="h1">
-        <span class="v-pmax">Find a Healthy Puppy from a <em>Verified Breeder.</em> No Scams. No Puppy Mills.</span>
-        <span class="v-meta">Bring Home the Newest <em>Member of Your Family.</em> Healthy. Happy. Yours.</span>
+        <span class="v-pmax">Find a Healthy Puppy from a <em>Verified Breeder.</em> <span class="hand">Checked for health. Raised for happiness.</span></span>
+        <span class="v-meta">Bring Home the Newest <em>Member of Your Family.</em> <span class="hand">Healthy. Happy. Yours.</span></span>
       </h1>
       <p class="sub">Backed by a health guarantee and support from first click to first cuddle.</p>
     </div>
@@ -191,14 +199,20 @@ const schema = {
   </div>
 </section>
 
-<!-- ================= DAILY CONCIERGE SUPPORT (split panel, slide 7) ================= -->
-<section class="split" id="support" aria-labelledby="h2-support">
+<!-- ================= BREEDERS ACROSS THE US + DELIVERY OPTIONS ================= -->
+<section class="split" id="delivery" aria-labelledby="h2-delivery">
   <div class="split-copy reveal">
-    <h2 id="h2-support">Daily Concierge Support</h2>
-    <p>A real person, every step of the way. Our concierge team fetches you information directly from the breeder, arranges video calls so you can meet the puppy over the phone, and schedules the soonest and safest option for pick ups and deliveries. We are here daily, 9AM–11PM EST.</p>
+    <h2 id="h2-delivery">Breeders across the US. Delivered your way.</h2>
+    <p>Find your puppy from approved breeders across the country. Every delivery is handled by trusted, licensed transporters, so your puppy gets home safely, wherever you live.</p>
+    <ul class="opts" aria-label="Delivery options">
+      {delivery.map(({ icon: Icon, title, text }) => (
+        <li><Icon class="i" aria-hidden="true" /><div><strong>{title}</strong><span>{text}</span></div></li>
+      ))}
+    </ul>
   </div>
-  <div class="split-img">
-    <img src="/images/specialist-couple.webp" width="760" height="760" alt="A smiling couple with their new golden puppy" loading="lazy" decoding="async">
+  <div class="split-map" role="img" aria-label="Map of the United States">
+    <img class="map" src="/images/us-map.webp" width="1400" height="764" alt="" loading="lazy" decoding="async">
+    <figure class="pin"><img src="/images/puppy-in-cabin.webp" width="640" height="457" alt="A happy Pomeranian puppy traveling in a carrier on a plane" loading="lazy" decoding="async"></figure>
   </div>
 </section>
 
