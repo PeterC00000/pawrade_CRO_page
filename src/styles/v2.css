@@ -351,8 +351,6 @@ body{font-family:var(--body)}
 .bubble{position:absolute;z-index:0;width:clamp(72px,9vw,136px);aspect-ratio:1;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 12px 28px rgba(20,28,36,.3)}
 .b1{left:5%;top:14%}.b2{left:14%;bottom:12%;width:clamp(60px,7vw,104px)}.b3{left:19%;top:6%;width:clamp(54px,6vw,90px)}
 .b4{right:5%;top:12%}.b5{right:15%;bottom:10%;width:clamp(60px,7vw,104px)}.b6{right:20%;top:5%;width:clamp(54px,6vw,90px)}
-@media (max-width:900px){.b3,.b6,.b2,.b5{display:none}.b1{left:-18px;top:auto;bottom:-10px}.b4{right:-18px;top:auto;bottom:-10px}}
-@media (max-width:520px){.bubble{display:none}}
 .hero{padding:clamp(28px,3.6vw,48px) 0}
 .hero .sub{margin-top:12px}
 .pullquote blockquote{font-size:16px}
@@ -456,4 +454,21 @@ body{font-family:var(--body)}
 }
 @media (max-width:700px) and (prefers-reduced-motion:reduce){
   .js .mbar,.js .mbar.show{transition:none}
+}
+
+/* ----- dream-puppy bubbles: desktop = scattered left/right of the text; mobile = 3 above the text, 3 below, same scattered, mixed sizes ----- */
+.bubs{display:contents}
+@media (max-width:900px){
+  .dream{padding:clamp(20px,5vw,40px) 0}
+  .dream .wrap{padding-block:clamp(14px,4vw,28px)}
+  .bubs{display:block;position:relative;height:clamp(120px,36vw,190px);margin-inline:auto;max-width:560px}
+  .bubble{border-width:4px;box-shadow:0 8px 20px rgba(20,28,36,.28)}
+  /* top group: bigger one on the left, small one high in the middle, medium one lower on the right */
+  .bubs-top .b1{left:4%;top:16%;right:auto;bottom:auto;width:clamp(78px,24vw,124px)}
+  .bubs-top .b2{left:42%;top:2%;right:auto;bottom:auto;width:clamp(54px,16vw,86px)}
+  .bubs-top .b3{left:68%;top:30%;right:auto;bottom:auto;width:clamp(64px,19vw,100px)}
+  /* bottom group: mirrored scatter so the two groups feel different */
+  .bubs-bot .b4{left:6%;top:6%;right:auto;bottom:auto;width:clamp(62px,19vw,100px)}
+  .bubs-bot .b5{left:36%;top:34%;right:auto;bottom:auto;width:clamp(56px,17vw,90px)}
+  .bubs-bot .b6{left:62%;top:4%;right:auto;bottom:auto;width:clamp(80px,25vw,128px)}
 }
